@@ -107,7 +107,6 @@ wolf-and-hedgehog/
 | کاربردی | **وزیرمتن (Vazirmatn)** با `letter-spacing: .04em` و سایز کوچک | شماره‌ی پرونده، برچسب‌ها، فوتر |
 
 مقیاس تایپ: `12 / 14 / 16 / 20 / 26 / 34 / 48`. اعداد فارسی با `font-variant-numeric: tabular-nums`.
-
 عمداً از وزیرمتن به‌عنوان فونت اصلی متن استفاده نمی‌کنیم — پیش‌فرض هر پروژه‌ی فارسی است و شخصیت ندارد.
 
 ### ۳.۳ عنصر امضا: **مُهر پرونده**
@@ -194,7 +193,7 @@ export type Stage = {
 - `app/layout.tsx` با `dir="rtl"` و `lang="fa"`
 - ESLint + Prettier + `pnpm typecheck` + Husky pre-commit
 - `.env.example` با `ACCESS_TOKEN`, `LINK_EXPIRES_AT`, `SITE_URL`
-- **ورودی انسانی لازم:** متن واقعی مرحله ۳ (اولین برخورد). تا تحویل، `status: 'pending-content'`.
+- محتوای مرحله ۳ تحویل شد؛ هیچ مرحله‌ای دیگر `pending-content` نیست.
 
 **خروجی مستند:** `docs/00-overview.md` (دامنه، قواعد ۱ تا ۶، پشته، ساختار مخزن)، `docs/CHANGELOG.md`
 
@@ -265,7 +264,7 @@ export type Stage = {
 |---|---|---|---|---|
 | ۱ | تأیید هویت | interrogation | choice تکی | — |
 | ۲ | شخصیت گرگ | interrogation | choice تکی | — |
-| ۳ | اولین برخورد | interrogation | **pending-content** | — |
+| ۳ | اولین برخورد در بیمارستان | interrogation | choice تکی (پاسخ درست: جغد رئیس) | بیمارستان جغدها |
 | ۴ | ثبت اولین نشانه‌ها | interrogation | choice چندتایی (۳ از ۵) | — |
 | ۵ | مسابقه‌ی قهر | interrogation | choice تکی | — |
 | ۶ | مأموریت گل‌ها | interrogation | pick | — |
@@ -280,7 +279,7 @@ export type Stage = {
 | ۱۵ | ریپلای استوری | interrogation | pick (۳ شاخه) | — |
 | ۱۶ | مراسم گل‌سر صورتی | map | pick | قبرستان گل‌سر صورتی |
 | ۱۷ | سؤال سخت | mind | choice چندتایی (بدون حداقل) | — |
-| ۱۸ | رئیس جغد | interrogation | split (۳ کشو) | دادگاه خانم بازرس |
+| ۱۸ | رئیس جغد | interrogation | split (۳ کشو + واکنش رد برای جای اشتباه) | دادگاه خانم بازرس |
 | ۱۹ | پیشنهاد ملاقات | map | pick | کافه‌ی وافل و نوتلا |
 | ۲۰ | عاقبت ارتباط | ending | choice تکی → ۳ پایان | — |
 
@@ -426,7 +425,6 @@ Usage: sudo ./uninstall.sh [--purge] [--keep-cert] [--yes]
 ## ۷. ترتیب اجرا برای Claude Code
 
 فازها **ترتیبی** اجرا می‌شوند. فاز بعدی شروع نمی‌شود مگر:
-
 1. معیارهای پذیرش فاز فعلی سبز باشند
 2. مستند فاز نوشته شده باشد
 3. `docs/CHANGELOG.md` به‌روز شده باشد
@@ -442,7 +440,6 @@ Usage: sudo ./uninstall.sh [--purge] [--keep-cert] [--yes]
 
 | مورد | برای کدام فاز |
 |---|---|
-| متن واقعی «اولین برخورد» برای مرحله ۳ | فاز ۴ |
 | فهرست کلمات و موضوعات ممنوعه (تست محتوا) | فاز ۷ |
 | دامنه یا زیردامنه‌ی نهایی | فاز ۸ |
 | تاریخ انقضای لینک | فاز ۵ |
