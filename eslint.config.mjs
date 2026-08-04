@@ -20,6 +20,11 @@ const config = [
       '@typescript-eslint/consistent-type-imports': 'error',
     },
   },
+  {
+    // اسکریپت‌های CLI کارشان چاپ در ترمینال است.
+    files: ['scripts/**/*.mjs'],
+    rules: { 'no-console': 'off' },
+  },
 ];
 
 export default config;

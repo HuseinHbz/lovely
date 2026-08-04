@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from 'next';
+import { InkBleedDefs } from '@/components/motion/InkBleed';
+import { THEME_COLOR } from '@/lib/theme';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -15,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#101A2E',
+  themeColor: THEME_COLOR,
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
@@ -24,7 +26,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fa" dir="rtl">
-      <body>{children}</body>
+      <body>
+        <InkBleedDefs />
+        {children}
+      </body>
     </html>
   );
 }

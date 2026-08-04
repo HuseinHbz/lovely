@@ -12,6 +12,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
+    "contrast": "node scripts/contrast.mjs",
     "prepare": "husky"
   },
   "dependencies": {
