@@ -1,0 +1,132 @@
+@import 'tailwindcss';
+
+/* ==================================================================
+   فونت‌ها — همه self-host در public/fonts. هیچ درخواستی به CDN خارجی.
+   ================================================================== */
+
+/* استعداد — فونت متن. نسخه‌ی variable، وزن ۱۰۰ تا ۹۰۰ در یک فایل. */
+@font-face {
+  font-family: 'Estedad';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Estedad-Arabic-var.woff2') format('woff2');
+  unicode-range:
+    U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E,
+    U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+@font-face {
+  font-family: 'Estedad';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Estedad-Latin-var.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* وزیرمتن — فقط برچسب‌ها، شماره‌ی پرونده و فوتر. یک وزن کافی است. */
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Vazirmatn-Regular.woff2') format('woff2');
+}
+
+/* مربا — فونت نمایشی.
+   فایل هنوز تحویل نشده؛ جزئیات در public/fonts/README.md.
+   تا وقتی فایل نیامده این بلوک کامنت می‌ماند تا درخواست ۴۰۴ تولید نشود؛
+   `--font-display` روی استعداد ۸۰۰ برمی‌گردد و چیزی نمی‌شکند.
+
+@font-face {
+  font-family: 'Morabba';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Morabba-Bold.woff2') format('woff2');
+}
+*/
+
+/* ==================================================================
+   توکن‌ها — بخش ۳٫۱ سند فازبندی.
+   هیچ رنگ hex ای خارج از همین فایل نوشته نمی‌شود.
+   ================================================================== */
+
+@theme {
+  /* پالت */
+  --color-shab: #101a2e; /* پس‌زمینه‌ی شب جنگل — رنگ غالب */
+  --color-kaj: #1e4034; /* سبز کاج، لایه‌ی میانی و مه */
+  --color-mahtab: #ede7d6; /* کاغذ پرونده و متن روی تیره */
+  --color-mohr: #a32b23; /* قرمز مُهر — فقط روی مُهر */
+  --color-tigh: #e0a458; /* کهربایی تیغ — تنها رنگ کلیک‌شدنی */
+  --color-jooheh: #6b7a8f; /* خاکستری‌آبی، متن ثانویه و خطوط */
+
+  /* فونت‌ها */
+  --font-display: 'Morabba', 'Estedad', system-ui, sans-serif;
+  --font-body: 'Estedad', system-ui, sans-serif;
+  --font-ui: 'Vazirmatn', 'Estedad', system-ui, sans-serif;
+
+  /* مقیاس تایپ — ۱۲ / ۱۴ / ۱۶ / ۲۰ / ۲۶ / ۳۴ / ۴۸ */
+  --text-xs: 0.75rem; /* 12 */
+  --text-sm: 0.875rem; /* 14 */
+  --text-base: 1rem; /* 16 */
+  --text-lg: 1.25rem; /* 20 */
+  --text-xl: 1.625rem; /* 26 */
+  --text-2xl: 2.125rem; /* 34 */
+  --text-3xl: 3rem; /* 48 */
+
+  /* چیدمان */
+  --spacing-safe: 1.5rem; /* حاشیه‌ی امن ۲۴px */
+  --container-card: 620px; /* عرض کارت پرونده */
+}
+
+/* ==================================================================
+   پایه
+   ================================================================== */
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background-color: var(--color-shab);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background-color: var(--color-shab);
+  color: var(--color-mahtab);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.75;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* اعداد فارسی هم‌عرض تا شماره‌ی پرونده و نوار پیشرفت نلرزند */
+body {
+  font-variant-numeric: tabular-nums;
+}
+
+/* focus قابل‌مشاهده — قاعده ۵. هیچ‌جا outline: none نوشته نمی‌شود. */
+:focus-visible {
+  outline: 2px solid var(--color-tigh);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* قاعده ۵: احترام به prefers-reduced-motion در سطح سراسری.
+   انیمیشن‌های Framer Motion در فاز ۶ جداگانه هم این را چک می‌کنند. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.2s !important;
+    scroll-behavior: auto !important;
+  }
+}
