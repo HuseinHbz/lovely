@@ -1,0 +1,197 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import type { Stage } from '@/content/schema';
+import { getNextStageId, reactionsFor, progressFor, FIRST_STAGE_ID } from '@/lib/engine';
+import { useStoryStore, clearProgress } from '@/lib/store';
+import { speakerName, getCharacter } from '@/content/characters';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { SpeakerBubble } from '@/components/ui/SpeakerBubble';
+import { ProgressSeal } from '@/components/ui/ProgressSeal';
+import { ChoiceList } from '@/components/interactions/ChoiceList';
+import { faNumber } from '@/lib/format';
+
+/**
+ * نمای یک مرحله.
+ *
+ * انیمیشن ورود و خروج طبق بخش ۴ سند؛ با `prefers-reduced-motion: reduce`
+ * همه‌شان به یک fade ساده‌ی ۰٫۲ ثانیه تبدیل می‌شوند.
+ */
+export function StageView({ stage }: { stage: Stage }) {
+  const router = useRouter();
+  const reduceMotion = useReducedMotion();
+
+  const goTo = useStoryStore((state) => state.goTo);
+  const recordChoice = useStoryStore((state) => state.recordChoice);
+  const choices = useStoryStore((state) => state.choices);
+
+  const [step, setStep] = useState(0);
+  const [selected, setSelected] = useState<string[] | undefined>(undefined);
+
+  // هر بار که مرحله عوض می‌شود، تعامل و انتخاب از نو شروع می‌شوند.
+  useEffect(() => {
+    setStep(0);
+    setSelected(undefined);
+    goTo(stage.id);
+  }, [stage.id, goTo]);
+
+  const interaction = stage.interactions[step];
+  const isLastInteraction = step >= stage.interactions.length - 1;
+  const nextStageId = getNextStageId(stage.id);
+  const progress = progressFor(stage.id, choices);
+
+  const enter = reduceMotion
+    ? { opacity: 1 }
+    : {
+        opacity: 1,
+        y: 0,
+        rotate: 0,
+        transition: { type: 'spring' as const, stiffness: 260, damping: 26 },
+      };
+  const from = reduceMotion ? { opacity: 0 } : { opacity: 0, y: 40, rotate: -1.5 };
+  const exit = reduceMotion
+    ? { opacity: 0, transition: { duration: 0.2 } }
+    : { opacity: 0, x: -30, y: -20, rotate: 2, transition: { duration: 0.35 } };
+
+  function handleSubmit(picked: string[]) {
+    if (interaction === undefined) return;
+    recordChoice(stage.id, step, picked);
+    setSelected(picked);
+  }
+
+  function handleAdvance() {
+    if (!isLastInteraction) {
+      setStep((current) => current + 1);
+      setSelected(undefined);
+      return;
+    }
+    if (nextStageId !== undefined) router.push(`/story/${nextStageId}`);
+  }
+
+  const reactions =
+    interaction !== undefined && selected !== undefined ? reactionsFor(interaction, selected) : [];
+  const hasDraft = reactions.some((option) => option.draft === true);
+
+  return (
+    <main className="flex min-h-dvh flex-col items-center gap-6 px-safe py-8">
+      <div className="flex w-full max-w-card flex-col gap-2">
+        <ProgressSeal total={progress.total} done={progress.done} current={progress.current} />
+        <p className="font-ui text-xs tracking-[0.04em] text-jooheh-text">
+          مرحله {faNumber(progress.current)} از {faNumber(progress.total)}
+          {progress.implemented < progress.total
+            ? ` — فعلاً ${faNumber(progress.implemented)} مرحله پیاده شده`
+            : ''}
+        </p>
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`${stage.id}-${step}`}
+          initial={from}
+          animate={enter}
+          exit={exit}
+          className="flex w-full justify-center"
+        >
+          <Card label={`پرونده‌ی محرمانه شماره ۲۷`} title={stage.title}>
+            <div className="flex flex-col gap-4">
+              {stage.lines.map((line, index) => (
+                <SpeakerBubble
+                  key={`${line.speaker}-${index}`}
+                  name={speakerName(line.speaker)}
+                  side={getCharacter(line.speaker).side}
+                >
+                  {line.text}
+                </SpeakerBubble>
+              ))}
+
+              <hr className="border-kaj/15" />
+
+              {interaction !== undefined &&
+                (interaction.kind === 'choice' || interaction.kind === 'pick') && (
+                  <ChoiceList
+                    interaction={interaction}
+                    onSubmit={handleSubmit}
+                    disabled={selected !== undefined}
+                  />
+                )}
+
+              {interaction !== undefined &&
+                interaction.kind !== 'choice' &&
+                interaction.kind !== 'pick' && (
+                  <p className="rounded-md border border-dashed border-jooheh/50 p-4 text-sm text-kaj/70">
+                    تعامل «{interaction.kind}» در فاز ۳ پیاده می‌شود.
+                  </p>
+                )}
+
+              <AnimatePresence>
+                {selected !== undefined && (
+                  <motion.div
+                    initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: reduceMotion ? 0.2 : 0.3 }}
+                    className="flex flex-col gap-4"
+                  >
+                    {reactions.map((option) => (
+                      <SpeakerBubble
+                        key={option.id}
+                        side={
+                          option.reactionSpeaker === undefined
+                            ? 'center'
+                            : getCharacter(option.reactionSpeaker).side
+                        }
+                        name={
+                          option.reactionSpeaker === undefined
+                            ? undefined
+                            : speakerName(option.reactionSpeaker)
+                        }
+                      >
+                        {option.reaction}
+                      </SpeakerBubble>
+                    ))}
+
+                    {isLastInteraction && stage.closing !== undefined && (
+                      <p className="text-base leading-[1.9] text-kaj">{stage.closing}</p>
+                    )}
+
+                    {hasDraft && (
+                      <p className="rounded-md border border-dashed border-mohr/60 px-3 py-2 font-ui text-xs text-mohr">
+                        این واکنش پیش‌نویس است و هنوز تأیید نشده.
+                      </p>
+                    )}
+
+                    <div className="flex flex-wrap items-center gap-3">
+                      {(!isLastInteraction || nextStageId !== undefined) && (
+                        <Button variant="solid" onClick={handleAdvance}>
+                          {isLastInteraction ? 'مرحله‌ی بعد' : 'ادامه'}
+                        </Button>
+                      )}
+                      {isLastInteraction && nextStageId === undefined && (
+                        <p className="font-ui text-sm text-kaj/70">
+                          فعلاً پرونده تا همین‌جا نوشته شده. بقیه‌ی مراحل در فاز ۴ اضافه می‌شوند.
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </Card>
+        </motion.div>
+      </AnimatePresence>
+
+      <Button
+        variant="quiet"
+        onClick={() => {
+          clearProgress();
+          router.push(`/story/${FIRST_STAGE_ID}`);
+          router.refresh();
+        }}
+      >
+        شروع دوباره
+      </Button>
+    </main>
+  );
+}

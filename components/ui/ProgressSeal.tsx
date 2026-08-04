@@ -1,3 +1,5 @@
+import { faNumber } from '@/lib/format';
+
 /**
  * نوار پیشرفت — یک مُهر کوچک به‌ازای هر مرحله.
  *
@@ -24,7 +26,7 @@ export function ProgressSeal({
       aria-valuemin={0}
       aria-valuemax={total}
       aria-valuenow={done}
-      aria-label={`پیشرفت پرونده: ${done} مرحله از ${total}`}
+      aria-label={`پیشرفت پرونده: ${faNumber(done)} مرحله از ${faNumber(total)}`}
     >
       {Array.from({ length: total }, (_, index) => {
         const step = index + 1;

@@ -27,7 +27,8 @@ export function SpeakerBubble({
   tone = 'paper',
 }: {
   children: ReactNode;
-  name?: string;
+  /** `undefined` یعنی گوینده نام ندارد — صدای خود پرونده. */
+  name?: string | undefined;
   side?: BubbleSide;
   /** `paper` روی کارت روشن، `night` روی پس‌زمینه‌ی تیره */
   tone?: 'paper' | 'night';
