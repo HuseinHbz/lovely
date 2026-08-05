@@ -12,7 +12,11 @@ import { Button } from '@/components/ui/Button';
 import { SpeakerBubble } from '@/components/ui/SpeakerBubble';
 import { ProgressSeal } from '@/components/ui/ProgressSeal';
 import { PandaLog } from '@/components/ui/PandaLog';
+import { CaseSummary } from '@/components/ui/CaseSummary';
+import { EndingChoice } from '@/components/interactions/EndingChoice';
 import { ChoiceList } from '@/components/interactions/ChoiceList';
+import { CardSplit } from '@/components/interactions/CardSplit';
+import { MapFind } from '@/components/interactions/MapFind';
 import { SkinFrame } from '@/components/skins/SkinFrame';
 import { faNumber } from '@/lib/format';
 
@@ -36,12 +40,18 @@ export function StageView({ stage }: { stage: Stage }) {
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<string[] | undefined>(undefined);
 
-  // هر بار که مرحله عوض می‌شود، تعامل و انتخاب از نو شروع می‌شوند.
+  // هر بار که برگه عوض می‌شود، تعامل و انتخاب از نو شروع می‌شوند.
+  //
+  // اثر برگه (نشان، شاخص، و برای برگه‌ی روایی علامت دیده‌شدن) همین‌جا اعمال
+  // می‌شود، نه موقع رفتن به برگه‌ی بعد — وگرنه آخرین برگه که «بعدی» ندارد
+  // هیچ‌وقت نشان و گره‌ی نقشه‌ی خودش را نمی‌گرفت. `applyStage` idempotent است.
   useEffect(() => {
     setStep(0);
     setSelected(undefined);
     goTo(stage.id);
-  }, [stage.id, goTo]);
+    applyStage(stage.id);
+    if (stage.interactions.length === 0) markSeen(stage.id);
+  }, [stage.id, stage.interactions.length, goTo, applyStage, markSeen]);
 
   const interaction = stage.interactions[step];
   /** برگه‌ی صرفاً روایی — `MERGED-SPEC` بخش ۶ برای برگه ۰۰ تعاملی نگذاشته. */
@@ -70,9 +80,7 @@ export function StageView({ stage }: { stage: Stage }) {
   }
 
   function handleAdvance() {
-    applyStage(stage.id);
     if (isNarrationOnly) {
-      markSeen(stage.id);
       if (nextStageId !== undefined) router.push(`/story/${nextStageId}`);
       return;
     }
@@ -135,7 +143,14 @@ export function StageView({ stage }: { stage: Stage }) {
 
                 {isNarrationOnly && (
                   <div className="flex flex-col gap-4">
+                    {stage.showSummary === true && <CaseSummary />}
+
+                    {stage.endings !== undefined && (
+                      <EndingChoice endings={stage.endings} closing={stage.closing} />
+                    )}
+
                     {stage.panda !== undefined && <PandaLog>{stage.panda}</PandaLog>}
+
                     {nextStageId !== undefined && (
                       <Button variant="solid" onClick={handleAdvance}>
                         برگه‌ی بعد
@@ -153,11 +168,26 @@ export function StageView({ stage }: { stage: Stage }) {
                     />
                   )}
 
+                {interaction !== undefined && interaction.kind === 'split' && (
+                  <CardSplit
+                    interaction={interaction}
+                    onDone={() => handleSubmit([interaction.kind])}
+                    disabled={selected !== undefined}
+                  />
+                )}
+
+                {interaction !== undefined && interaction.kind === 'find' && (
+                  <MapFind
+                    interaction={interaction}
+                    onDone={() => handleSubmit([interaction.kind])}
+                    disabled={selected !== undefined}
+                  />
+                )}
+
                 {interaction !== undefined &&
-                  interaction.kind !== 'choice' &&
-                  interaction.kind !== 'pick' && (
+                  (interaction.kind === 'sort' || interaction.kind === 'repeat') && (
                     <p className="rounded-md border border-dashed border-jooheh/50 p-4 text-sm text-kaj/70">
-                      تعامل «{interaction.kind}» هنوز پیاده نشده.
+                      تعامل «{interaction.kind}» در هیچ برگه‌ای استفاده نشده.
                     </p>
                   )}
 

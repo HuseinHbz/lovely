@@ -22,6 +22,11 @@ type StoryState = {
   /** نشان‌های باز‌شده — `content/achievements.ts`. */
   achievements: string[];
   /**
+   * برگه‌هایی که اثرشان (نشان و شاخص) یک بار اعمال شده.
+   * بدون این، بازدید دوباره‌ی یک برگه شاخص‌ها را دوباره جمع می‌زد.
+   */
+  applied: string[];
+  /**
    * شاخص‌های طنز پرونده. `MERGED-SPEC` بخش ۴:
    * هیچ‌کدام هیچ صحنه، پایان یا محتوایی را قفل نمی‌کنند و هیچ عددی نمی‌گوید
    * «رد شدی». فقط برگه‌ی خلاصه‌ی پایانی از رویشان ساخته می‌شود.
@@ -49,6 +54,7 @@ const initialState: StoryState = {
   choices: {},
   unlockedNodes: [],
   achievements: [],
+  applied: [],
   meters: {},
   soundOn: false,
 };
@@ -84,7 +90,8 @@ export const useStoryStore = create<StoryState & StoryActions>()(
       applyStage: (stageId) =>
         set((state) => {
           const stage = getStage(stageId);
-          if (stage === undefined) return state;
+          // اعمال دقیقاً یک بار: وگرنه بازدید دوباره شاخص‌ها را دوبار جمع می‌زند.
+          if (stage === undefined || state.applied.includes(stageId)) return state;
 
           const achievements = [...state.achievements];
           if (stage.achievement !== undefined && !achievements.includes(stage.achievement)) {
@@ -96,7 +103,7 @@ export const useStoryStore = create<StoryState & StoryActions>()(
             meters[id] = (meters[id] ?? 0) + delta;
           }
 
-          return { achievements, meters };
+          return { achievements, meters, applied: [...state.applied, stageId] };
         }),
 
       toggleSound: () => set((state) => ({ soundOn: !state.soundOn })),
@@ -112,6 +119,7 @@ export const useStoryStore = create<StoryState & StoryActions>()(
         choices: state.choices,
         unlockedNodes: state.unlockedNodes,
         achievements: state.achievements,
+        applied: state.applied,
         meters: state.meters,
         soundOn: state.soundOn,
       }),

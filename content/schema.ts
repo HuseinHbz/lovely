@@ -182,7 +182,10 @@ export const stageSchema = z
      * دلتای شاخص‌های طنز. **هیچ اثر مکانیکی ندارد** — نه چیزی قفل می‌کند، نه
      * مسیری را عوض می‌کند. فقط برگه‌ی خلاصه‌ی پایانی از رویشان ساخته می‌شود.
      */
-    meters: z.record(z.enum(METER_IDS), z.number().int()).optional(),
+    // `partialRecord` چون هر برگه فقط چند شاخص را جابه‌جا می‌کند، نه همه را.
+    meters: z.partialRecord(z.enum(METER_IDS), z.number().int()).optional(),
+    /** برگه‌ی خلاصه: شش شاخص طنز را نمایش می‌دهد. */
+    showSummary: z.literal(true).optional(),
     /** فقط برگه‌ی پایانی: چهار پایان هم‌ارزش. */
     endings: z.array(endingSchema).min(2).optional(),
     status: z.enum(['ready', 'pending-content']).default('ready'),
