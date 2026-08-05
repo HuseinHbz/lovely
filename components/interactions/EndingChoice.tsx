@@ -19,7 +19,7 @@ export function EndingChoice({
   endings: readonly Ending[];
   closing?: string | undefined;
 }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() ?? false;
   const [picked, setPicked] = useState<Ending | undefined>(undefined);
 
   if (picked !== undefined) {

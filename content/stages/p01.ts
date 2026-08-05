@@ -7,8 +7,8 @@ import { defineStage } from '../schema';
  * رئیس از نسخه ۱ هم زنده ماند (`STORY-v1-superseded.md` مرحله ۳).
  *
  * تعاملی که `MERGED-SPEC` بخش ۶ خواسته «انتخاب اولین برداشت گرگ» است، ولی متن
- * گزینه‌ها هیچ‌جا نوشته نشده. سه گزینه‌ی زیر پیش‌نویس من‌اند و `draft: true`
- * دارند، پس `pnpm validate:content:strict` تا تأیید نشدنشان خطا می‌دهد.
+ * گزینه‌ها هیچ‌جا نوشته نشده بود. سه گزینه‌ی زیر نوشته‌ی من بودند و در فاز ۶
+ * تأیید شدند.
  */
 export const p01 = defineStage({
   id: 'p01',
@@ -18,6 +18,7 @@ export const p01 = defineStage({
   mapNode: 'first-meeting',
   setting: { wolf: 'hospital', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
+  faces: { wolf: 'neutral', hedgehog: 'neutral' },
   lines: [
     {
       speaker: 'nazoo',
@@ -43,7 +44,6 @@ export const p01 = defineStage({
             'این جمله در دفتر اول ثبت شد و در دفتر پنجم دوباره خوانده شد. پاندا هنوز به آن می‌خندد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'sharp',
@@ -51,7 +51,6 @@ export const p01 = defineStage({
           reaction: 'ارزیابی دقیق بود. گرگ معمولاً دقیق است — مشکل جای دیگری شروع می‌شود.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'no-idea',
@@ -59,7 +58,6 @@ export const p01 = defineStage({
           reaction: 'ادعای بی‌طرفی ثبت شد. پرونده‌ای که بعداً تشکیل شد با این ادعا هم‌خوانی ندارد.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
       ],
     },

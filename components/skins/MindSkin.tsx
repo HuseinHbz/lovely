@@ -13,7 +13,7 @@ import { motion, useReducedMotion } from 'motion/react';
 
 /** حباب‌های شناور بی‌کار — هر کدام فاز تصادفی خودش را دارد (بخش ۴ سند). */
 function IdleBubbles() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() ?? false;
   const bubbles = [
     { size: 90, start: 6, top: 4, delay: 0 },
     { size: 58, start: 72, top: 14, delay: 1.1 },

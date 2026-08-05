@@ -9,6 +9,7 @@ export const p02 = defineStage({
   mapNode: 'first-chat',
   setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'desk', hedgehog: 'nurse' },
+  faces: { wolf: 'smug', hedgehog: 'annoyed' },
   lines: [
     { speaker: 'nazoo', text: 'اولین مکالمه. هنوز هیچ‌کس نمی‌دانست دارد پرونده می‌سازد.' },
     { speaker: 'hedgehog', text: 'من منم.' },
@@ -26,7 +27,6 @@ export const p02 = defineStage({
             'و همین یک جمله، سیستم لقب‌گذاری را برای همیشه روشن کرد. گرگ فکر می‌کرد دارد شوخی می‌کند.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'not-an-answer',
@@ -35,7 +35,6 @@ export const p02 = defineStage({
             'گرگ دنبال جواب بود. در این پرونده، «من منم» کامل‌ترین جوابی است که تا امروز داده شده.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'noted',
@@ -43,7 +42,6 @@ export const p02 = defineStage({
           reaction: 'گرگ عادت دارد همه‌چیز را ثبت کند. این یکی را هم ثبت کرد و بعداً پشیمان نشد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
       ],
     },

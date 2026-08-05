@@ -26,7 +26,7 @@ export function CardSplit({
   onDone: () => void;
   disabled?: boolean;
 }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() ?? false;
   const [held, setHeld] = useState<string | undefined>(undefined);
   const [placed, setPlaced] = useState<Record<string, string>>({});
   const [rejection, setRejection] = useState<string | undefined>(undefined);

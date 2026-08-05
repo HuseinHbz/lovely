@@ -11,6 +11,7 @@ export const p13 = defineStage({
   skin: 'interrogation',
   setting: { wolf: 'home', hedgehog: 'home' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
+  faces: { wolf: 'smug', hedgehog: 'laughing' },
   lines: [
     { speaker: 'wolf', text: 'نا محرمی دیگه وگرنه بغلت می‌کردم.' },
     { speaker: 'hedgehog', text: 'از اون بغل‌های زورکی؟' },

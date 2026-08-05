@@ -10,6 +10,7 @@ export const p23 = defineStage({
   achievement: 'ghafase-ketab',
   setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'storm' },
+  faces: { wolf: 'guilty', hedgehog: 'annoyed' },
   lines: [
     {
       speaker: 'hedgehog',
@@ -29,7 +30,6 @@ export const p23 = defineStage({
             'گرگ فهرست را جدی گرفت و رفت خرید. برگشت و فهمید فهرست اصلاً درباره‌ی خرید نبود.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'books-only',
@@ -38,7 +38,6 @@ export const p23 = defineStage({
             'گرگ صادقانه گفت چه‌کاری از دستش برمی‌آید. صداقت در فهرست نبود، ولی بیشتر از فهرست جواب داد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'wait',
@@ -47,7 +46,6 @@ export const p23 = defineStage({
             'گرگ در این لحظه یک نکته‌ی مهم را فهمید: قیمت آشتی را نباید از زبان کسی که عصبانی است پرسید.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'negotiate-list',
@@ -55,7 +53,6 @@ export const p23 = defineStage({
           reaction: 'گرگ وسط قهر وارد مذاکره شد. طوفان یک درجه بیشتر شد و بعد، بی‌دلیل، خنده آمد.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
       ],
     },

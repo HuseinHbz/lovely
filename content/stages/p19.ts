@@ -13,6 +13,7 @@ export const p19 = defineStage({
   skin: 'interrogation',
   setting: { wolf: 'hospital', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
+  faces: { wolf: 'annoyed', hedgehog: 'neutral' },
   lines: [
     { speaker: 'hedgehog', text: 'من اصلاً نمی‌خوام رئیس بو ببره.' },
     {

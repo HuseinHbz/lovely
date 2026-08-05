@@ -28,7 +28,6 @@ export const p18 = defineStage({
             'صبح زود یعنی یکی از دو نفر نخوابیده. گرگ داوطلب شد نخوابد. این را در پرونده به نفعش نوشتند.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'after-shift',
@@ -37,7 +36,6 @@ export const p18 = defineStage({
             'بعد از شیفت یعنی یکی از دو نفر خسته است. قرار برگزار شد و نصفش در سکوت گذشت — که بد نبود.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'day-off',
@@ -46,7 +44,6 @@ export const p18 = defineStage({
             'روز تعطیل پیدا شد. سه بار جابه‌جا شد. بار چهارم واقعاً اتفاق افتاد و هیچ‌کس باور نکرد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'short',
@@ -54,7 +51,6 @@ export const p18 = defineStage({
           reaction: 'بیست دقیقه شد یک ساعت و نیم. تنها باری که برنامه‌ریزی گرگ از خودش جلو زد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
       ],
     },

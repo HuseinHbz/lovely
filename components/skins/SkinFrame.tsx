@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import type { SkinId } from '@/content/schema';
-import type { FaceState } from '@/components/art/faces';
+import type { FaceState } from '@/lib/faces';
 import type { HedgehogOutfit, WolfOutfit } from '@/lib/wardrobe';
 import { InterrogationSkin } from './InterrogationSkin';
 import { MapSkin } from './MapSkin';

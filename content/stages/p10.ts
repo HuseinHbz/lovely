@@ -12,6 +12,7 @@ export const p10 = defineStage({
   mapNode: 'gifts',
   setting: { wolf: 'outside', hedgehog: 'outside' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
+  faces: { wolf: 'neutral', hedgehog: 'melting' },
   lines: [
     { speaker: 'hedgehog', text: 'مهم تلاششه.' },
     { speaker: 'wolf', text: 'خوشحال میشی؟' },
@@ -30,7 +31,6 @@ export const p10 = defineStage({
             'قیمت بالا ثبت شد، فکر پشتش پیدا نشد. گرگ در دفاع گفت «ولی گرون بود» و همین جمله علیه خودش ضبط شد.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'thoughtful',
@@ -38,7 +38,6 @@ export const p10 = defineStage({
           reaction: 'گرگ بالاخره فهمید مسئله فقط قیمت نیست. مسئله این است که کسی حواسش به تو بوده.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'ask',
@@ -47,7 +46,6 @@ export const p10 = defineStage({
             'پرسیدن جواب داد، ولی نصفه. طرف مقابل گفت «فرقی نمی‌کنه» — که در این پرونده یعنی خیلی هم فرق می‌کند.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'time',
@@ -55,7 +53,6 @@ export const p10 = defineStage({
           reaction: 'ثبت شد. گرگ پرسید یعنی دیگر چیزی نخرم، و مثل همیشه پاسخ روشنی نگرفت.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
       ],
     },

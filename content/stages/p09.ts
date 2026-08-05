@@ -8,6 +8,7 @@ export const p09 = defineStage({
   skin: 'interrogation',
   setting: { wolf: 'home', hedgehog: 'home' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
+  faces: { wolf: 'smug', hedgehog: 'laughing' },
   lines: [{ speaker: 'hedgehog', text: 'همون آدمای آروم کسل‌کنندن.' }],
   interactions: [
     {
@@ -21,7 +22,6 @@ export const p09 = defineStage({
           reaction: 'جواب گرفت: «اومم شاید.» پرونده این «شاید» را به‌عنوان مدرک علاقه ثبت کرد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'defend-calm',
@@ -30,7 +30,6 @@ export const p09 = defineStage({
             'گرگ از آرامش دفاع کرد. دفاعش منطقی بود و دقیقاً به همین دلیل کسی تحت تأثیر قرار نگرفت.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'agree',
@@ -38,7 +37,6 @@ export const p09 = defineStage({
           reaction: 'گرگ با طرف مقابل موافقت کرد تا بحث تمام شود. بحث تمام نشد، ولی خنده‌دار شد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
       ],
     },

@@ -6,6 +6,7 @@ import {
   checkWardrobe,
   describeViolation,
 } from '@/lib/wardrobe';
+import { FACE_STATES } from '@/lib/faces';
 import { METER_IDS } from './meters';
 
 /**
@@ -34,6 +35,19 @@ export const stageIdSchema = z.string().regex(/^p\d{2}$/, 'شناسه‌ی بر�
 const slug = z.string().min(1);
 const text = z.string().min(1);
 
+/**
+ * حالت چهره‌ی دو شخصیت.
+ *
+ * در سطح برگه حالت پایه را می‌دهد و در سطح گزینه همان را برای لحظه‌ی بعد از
+ * انتخاب بازنویسی می‌کند. هر دو اختیاری‌اند و نبودشان یعنی `neutral` —
+ * پس هیچ برگه‌ای مجبور نیست حالت بدهد.
+ */
+const facesSchema = z.object({
+  wolf: z.enum(FACE_STATES).optional(),
+  hedgehog: z.enum(FACE_STATES).optional(),
+});
+export type Faces = z.infer<typeof facesSchema>;
+
 export const optionSchema = z.object({
   id: slug,
   label: text,
@@ -43,6 +57,8 @@ export const optionSchema = z.object({
   reaction: text,
   /** متن مُهر: «ثبت شد»، «مشکوک»، «وکیل خبر شد»، … */
   stamp: text.optional(),
+  /** حالت چهره بعد از انتخاب این گزینه؛ حالت پایه‌ی برگه را بازنویسی می‌کند. */
+  face: facesSchema.optional(),
   reactionSpeaker: speakerSchema.optional(),
   /**
    * `true` یعنی این واکنش پیش‌نویس است و هنوز تأیید نشده.
@@ -174,6 +190,8 @@ export const stageSchema = z
         hedgehog: z.enum(HEDGEHOG_OUTFITS).optional(),
       })
       .optional(),
+    /** حالت پایه‌ی چهره در این برگه. گزینه‌ها می‌توانند بازنویسی‌اش کنند. */
+    faces: facesSchema.optional(),
     lines: z.array(z.object({ speaker: speakerSchema, text })).min(1),
     /**
      * افزوده نسبت به سند: آرایه به‌جای یک تعامل.

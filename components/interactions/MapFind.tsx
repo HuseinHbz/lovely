@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import type { Interaction } from '@/content/schema';
 import { Button } from '@/components/ui/Button';
+import { useStoryStore } from '@/lib/store';
+import { playSound } from '@/lib/sound';
 
 type Find = Extract<Interaction, { kind: 'find' }>;
 
@@ -25,8 +27,9 @@ export function MapFind({
   onDone: () => void;
   disabled?: boolean;
 }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() ?? false;
   const [chosen, setChosen] = useState<string | undefined>(undefined);
+  const soundOn = useStoryStore((state) => state.soundOn);
 
   const picked = interaction.hotspots.find((spot) => spot.id === chosen);
 
@@ -67,7 +70,10 @@ export function MapFind({
               <button
                 type="button"
                 disabled={disabled}
-                onClick={() => setChosen(spot.id)}
+                onClick={() => {
+                  setChosen(spot.id);
+                  playSound('pin', soundOn);
+                }}
                 className="flex min-h-11 w-full cursor-pointer items-center rounded-md border border-kaj/25 px-4 py-3 text-start text-base text-kaj transition-colors hover:border-tigh hover:bg-tigh/10"
               >
                 {spot.label}

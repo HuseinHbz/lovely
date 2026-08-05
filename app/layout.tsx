@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { InkBleedDefs } from '@/components/motion/InkBleed';
+import { MotionProvider } from '@/components/motion/MotionProvider';
 import { THEME_COLOR } from '@/lib/theme';
 import './globals.css';
 
@@ -28,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fa" dir="rtl">
       <body>
         <InkBleedDefs />
-        {children}
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

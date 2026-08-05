@@ -30,7 +30,6 @@ export const p14 = defineStage({
           reaction: 'جواب گرفت: «خوبت شد.» پرونده این را پایان کامل و منصفانه‌ی ماجرا می‌داند.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'again',
@@ -39,7 +38,6 @@ export const p14 = defineStage({
             'گرگ درخواست تکرار داد. اژدها بدون مکث اجابت کرد. این تنها درخواستی است که در این پرونده سریع جواب گرفت.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'insurance',
@@ -48,7 +46,6 @@ export const p14 = defineStage({
             'گرگ وسط سوختن سراغ بیمه رفت. مدیر پروژه بودن گاهی در بدترین لحظات خودش را نشان می‌دهد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
       ],
     },

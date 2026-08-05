@@ -15,7 +15,7 @@ import { Hedgehog } from '@/components/art/Hedgehog';
 import { Panda } from '@/components/art/Panda';
 import { Owl } from '@/components/art/Owl';
 import { WolfCar } from '@/components/art/WolfCar';
-import { FACE_STATES, FACE_LABELS, type FaceState } from '@/components/art/faces';
+import { FACE_STATES, FACE_LABELS, type FaceState } from '@/lib/faces';
 import {
   WOLF_OUTFITS,
   WOLF_OUTFIT_LABELS,

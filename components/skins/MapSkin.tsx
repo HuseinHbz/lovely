@@ -1,10 +1,13 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { ForestMap } from '@/components/art/ForestMap';
 import { Button } from '@/components/ui/Button';
 import { faNumber } from '@/lib/format';
 import { MAP_NODES } from '@/content/map';
+import { useStoryStore } from '@/lib/store';
+import { playSound } from '@/lib/sound';
 
 /**
  * اسکین ۳ — نقشه‌ی جنگل.
@@ -26,6 +29,9 @@ export function MapSkin({
   selectableIds?: readonly string[] | undefined;
 }) {
   const [zoom, setZoom] = useState(1);
+  const [foundClip, setFoundClip] = useState(false);
+  const reduceMotion = useReducedMotion() ?? false;
+  const soundOn = useStoryStore((state) => state.soundOn);
 
   return (
     <section className="flex w-full flex-col items-center gap-4">
@@ -61,10 +67,26 @@ export function MapSkin({
             unlocked={unlocked}
             onSelect={onSelect}
             selectableIds={selectableIds}
+            onSecretFound={() => {
+              setFoundClip(true);
+              playSound('pin', soundOn);
+            }}
             className="h-full w-full"
           />
         </div>
       </div>
+
+      {foundClip && (
+        <motion.p
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: reduceMotion ? 0.2 : 0.35 }}
+          className="w-full max-w-card rounded-md border border-dashed border-tigh/50 px-4 py-3 text-sm leading-[1.9] text-mahtab"
+        >
+          یک گل‌سر، لای درخت‌ها. در هیچ صورت‌جلسه‌ای ثبت نشده و صاحبش هم چیزی نگفته. دبیرخانه آن را
+          همان‌جا می‌گذارد — بعضی چیزها مدرک نیستند، فقط یادگاری‌اند.
+        </motion.p>
+      )}
 
       {/* فهرست متنی همان نقاط — راه دسترسی برای کاربر کیبورد و صفحه‌خوان */}
       <ul className="flex w-full max-w-card flex-wrap gap-2">

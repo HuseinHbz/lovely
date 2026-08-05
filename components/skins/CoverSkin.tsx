@@ -43,7 +43,7 @@ function Footprints() {
 }
 
 export function CoverSkin({ children }: { children?: ReactNode }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() ?? false;
 
   return (
     <section className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-shab px-safe py-10">

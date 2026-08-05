@@ -8,6 +8,7 @@ export const p11 = defineStage({
   skin: 'interrogation',
   setting: { wolf: 'home', hedgehog: 'home' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
+  faces: { wolf: 'neutral', hedgehog: 'melting' },
   lines: [
     { speaker: 'nazoo', text: 'بحث به مادرشوهر و خواهرشوهر و بچه‌ها رسید. کسی نپرسید چطور.' },
     { speaker: 'hedgehog', text: 'دوس ندارم بچه‌هام عمه داشته باشن.' },
@@ -25,7 +26,6 @@ export const p11 = defineStage({
             'گرگ کل تحلیلش را در چهار حرف خلاصه کرد. پرونده این را دقیق‌ترین جواب او تا اینجا می‌داند.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'negotiate',
@@ -34,7 +34,6 @@ export const p11 = defineStage({
             'گرگ پیشنهاد مذاکره داد. طرف مقابل اعلام کرد این بند غیرقابل مذاکره است و جلسه بسته شد.',
           reactionSpeaker: 'nazoo',
           stamp: 'مردود',
-          draft: true,
         },
         {
           id: 'slow-down',
@@ -43,7 +42,6 @@ export const p11 = defineStage({
             'حرف درستی بود. آن‌ها هنوز درباره‌ی رابطه‌شان به نتیجه نرسیده بودند، اما ظاهراً ساختار خانواده‌ی آینده تقریباً کامل شده بود.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
       ],
     },

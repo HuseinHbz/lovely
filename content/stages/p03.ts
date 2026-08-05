@@ -10,6 +10,7 @@ export const p03 = defineStage({
   achievement: 'bazras',
   setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
+  faces: { wolf: 'smug', hedgehog: 'annoyed' },
   lines: [
     { speaker: 'nazoo', text: 'دفتر القاب باز شد. هیچ‌کس نمی‌دانست دیگر بسته نمی‌شود.' },
     {
@@ -29,7 +30,6 @@ export const p03 = defineStage({
           reaction: 'ثبت شد. صاحب لقب اعتراض کرد، ولی اعتراضش هم با همین لقب در پرونده بایگانی شد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'khanoom-bazras',
@@ -38,7 +38,6 @@ export const p03 = defineStage({
             'خطرناک‌ترین انتخاب ممکن. از این لحظه هر جمله‌ی گرگ می‌تواند به‌عنوان مدرک استفاده شود.',
           reactionSpeaker: 'nazoo',
           stamp: 'وکیل خبر شد',
-          draft: true,
         },
         {
           id: 'agha-gorg',
@@ -47,7 +46,6 @@ export const p03 = defineStage({
             'گرگ لقب خودش را انتخاب کرد. این تنها مرحله‌ای از پرونده است که گرگ کاملاً راضی به‌نظر می‌رسید.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'agha-ghazi',
@@ -55,7 +53,6 @@ export const p03 = defineStage({
           reaction: 'لقب سنگینی است. صاحبش دو برگه بعد پشت میز قضاوت نشست و از آن پشیمان شد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
       ],
     },

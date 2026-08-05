@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react';
 import { Wolf } from '@/components/art/Wolf';
 import { Hedgehog } from '@/components/art/Hedgehog';
-import type { FaceState } from '@/components/art/faces';
+import type { FaceState } from '@/lib/faces';
 import type { HedgehogOutfit, WolfOutfit } from '@/lib/wardrobe';
 
 /**

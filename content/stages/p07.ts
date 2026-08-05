@@ -10,6 +10,7 @@ export const p07 = defineStage({
   achievement: 'panda-bigonah',
   setting: { wolf: 'work', hedgehog: 'outside' },
   wardrobe: { wolf: 'desk', hedgehog: 'casual' },
+  faces: { wolf: 'guilty', hedgehog: 'hurt' },
   lines: [
     { speaker: 'nazoo', text: 'گرگ عکسی از میز کارش منتشر کرد. در تصویر، یک پاندا نشسته بود.' },
     { speaker: 'hedgehog', text: 'اون پانداعه کل ابهت سیستم رو برد زیر سؤال.' },
@@ -26,7 +27,6 @@ export const p07 = defineStage({
           reaction: 'جواب گرفت: «خوبه باز یکی باهات موافقه.» پرونده این را برد متهم دوم ثبت کرد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'defend',
@@ -35,7 +35,6 @@ export const p07 = defineStage({
             'گرگ از پاندا دفاع کرد. پاندا بدون اینکه بداند، وارد رابطه‌ای شد که هیچ نقشی در آن نداشت.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'seen',
@@ -44,7 +43,6 @@ export const p07 = defineStage({
             'سکوت هم یک اظهارنظر است. متهم دوم آن را یادداشت کرد؛ یادداشت‌هایش پاک نمی‌شوند.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
       ],
     },

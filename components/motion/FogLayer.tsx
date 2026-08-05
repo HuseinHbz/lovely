@@ -27,7 +27,7 @@ function FogBand({ opacity }: { opacity: number }) {
 }
 
 export function FogLayer({ className = '' }: { className?: string }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() ?? false;
 
   const drift = (seconds: number, reverse: boolean) =>
     reduceMotion

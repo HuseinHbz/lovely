@@ -28,7 +28,6 @@ export const p12 = defineStage({
             'گرگ گفت بیدار می‌ماند و بیدار ماند. ابی زودتر از هر دو خوابید و برنده‌ی واقعی همان شب بود.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'both',
@@ -36,7 +35,6 @@ export const p12 = defineStage({
           reaction: 'شمارش انجام شد. هیچ‌کدام نخوابیدند. مسابقه به دلیل تقلب دوطرفه باطل اعلام شد.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'jealous',
@@ -45,7 +43,6 @@ export const p12 = defineStage({
             'گرگ حسود شد و شوخی‌اش را پشت یک سؤال جدی قایم کرد. ابی سرش را بلند کرد و دوباره خوابید.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
       ],
     },

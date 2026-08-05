@@ -8,6 +8,7 @@ export const p22 = defineStage({
   skin: 'interrogation',
   setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
+  faces: { wolf: 'guilty', hedgehog: 'annoyed' },
   lines: [
     { speaker: 'nazoo', text: 'پرونده دوباره روی میز آمد. این بار سنگین‌تر بود.' },
     { speaker: 'hedgehog', text: 'پرونده‌ات به اندازه‌ی صفحات رمان شوهر آهو خانم سنگینه.' },
@@ -20,28 +21,28 @@ export const p22 = defineStage({
       options: [
         {
           id: 'lawyer',
+          face: { wolf: 'smug', hedgehog: 'furious' },
           label: 'پس من باید وکیل بگیرم نه گل بخرم.',
           reaction:
             'دادگاه خندید. خنده در دادگاه سابقه ندارد، ولی این پرونده از اول هم قانونی نبود.',
           reactionSpeaker: 'nazoo',
           stamp: 'وکیل خبر شد',
-          draft: true,
         },
         {
           id: 'plead',
+          face: { wolf: 'guilty', hedgehog: 'hurt' },
           label: 'قبول دارم. سنگینه.',
           reaction: 'گرگ اتهام را پذیرفت. حجم پرونده کم نشد، ولی برای اولین بار کسی سرش داد نزد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'counter',
+          face: { wolf: 'annoyed', hedgehog: 'furious' },
           label: 'پرونده‌ی تو هم نازک نیست.',
           reaction: 'گرگ پرونده‌ی متقابل باز کرد. حالا دو پرونده‌ی سنگین داریم و همان یک مشکل.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
       ],
     },

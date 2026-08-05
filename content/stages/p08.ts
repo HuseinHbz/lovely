@@ -26,7 +26,6 @@ export const p08 = defineStage({
             'گرگ اشاره را گرفت و جواب داد. در تمام این پرونده، این یکی از معدود دفعاتی است که به‌موقع فهمید.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'silence',
@@ -34,7 +33,6 @@ export const p08 = defineStage({
           reaction: 'سکوت ثبت شد. طرف مقابل آن را دید و چیزی نگفت، که خودش نوع دیگری از سکوت است.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'pretend',
@@ -43,7 +41,6 @@ export const p08 = defineStage({
             'گرگ وانمود کرد ندیده. فهرست نزدیکان یک نفره است؛ وانمود کردن در فهرست یک‌نفره جواب نمی‌دهد.',
           reactionSpeaker: 'nazoo',
           stamp: 'مردود',
-          draft: true,
         },
       ],
     },

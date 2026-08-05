@@ -15,6 +15,7 @@ export const p20 = defineStage({
   achievement: 'ghahr-tarikhi',
   setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'desk', hedgehog: 'nurse' },
+  faces: { wolf: 'hurt', hedgehog: 'furious' },
   lines: [
     {
       speaker: 'nazoo',
@@ -35,38 +36,38 @@ export const p20 = defineStage({
       options: [
         {
           id: 'explain',
+          face: { wolf: 'neutral', hedgehog: 'hurt' },
           label: 'می‌گویم مشکل چیست، حتی اگر سخت باشد.',
           reaction:
             'گرگ توضیح داد. سوءتفاهم همان‌جا تمام نشد، ولی دیگر بزرگ‌تر هم نشد. همین کافی بود.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'stay-quiet',
+          face: { wolf: 'hurt', hedgehog: 'annoyed' },
           label: 'نمی‌خواهم درگیرش کنم. چیزی نمی‌گویم.',
           reaction:
             'گرگ سکوت کرد تا کسی نگران نشود. نتیجه‌اش این شد که طرف مقابل نگران چیز دیگری شد.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'later',
+          face: { wolf: 'hurt', hedgehog: 'annoyed' },
           label: 'الان نه. بعداً حرف می‌زنیم.',
           reaction: 'به تعویق افتاد. «بعداً» در این پرونده معمولاً یعنی «وقتی هر دو خسته‌تر شدیم».',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'deflect',
+          face: { wolf: 'annoyed', hedgehog: 'furious' },
           label: 'چیزی نیست. تو زیادی فکر می‌کنی.',
           reaction:
             'این جمله هیچ‌وقت در تاریخ هیچ رابطه‌ای کار نکرده. پرونده آن را به‌عنوان مدرک ثبت کرد و سراغ برگه‌ی بعد رفت.',
           reactionSpeaker: 'nazoo',
           stamp: 'مردود',
-          draft: true,
         },
       ],
     },

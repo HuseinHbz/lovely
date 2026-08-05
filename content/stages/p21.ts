@@ -8,6 +8,7 @@ export const p21 = defineStage({
   skin: 'interrogation',
   setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
+  faces: { wolf: 'guilty', hedgehog: 'hurt' },
   lines: [
     { speaker: 'wolf', text: 'تو ملکه‌ای.' },
     { speaker: 'hedgehog', text: 'ملکه‌ها اینجوری باهاشون رفتار نمی‌شه.' },
@@ -24,7 +25,6 @@ export const p21 = defineStage({
           reaction: 'گرگ پذیرفت. این کوتاه‌ترین و مفیدترین جمله‌ی او در کل دفتر پنجم است.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
         {
           id: 'but-i-meant',
@@ -33,7 +33,6 @@ export const p21 = defineStage({
             'گرگ منظورش را توضیح داد. منظور مشکل نبود؛ رفتار بود. توضیح رفتار را عوض نمی‌کند.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'more-words',
@@ -42,7 +41,6 @@ export const p21 = defineStage({
             'گرگ فکر کرد مشکل کیفیت تعریف بوده. تعریف بعدی قشنگ‌تر بود و دقیقاً همان‌قدر بی‌اثر.',
           reactionSpeaker: 'nazoo',
           stamp: 'مردود',
-          draft: true,
         },
       ],
     },

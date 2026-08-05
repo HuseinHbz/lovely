@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'motion/react';
-import type { FaceState } from './faces';
+import type { FaceState } from '@/lib/faces';
 import type { HedgehogOutfit } from '@/lib/wardrobe';
 
 /**

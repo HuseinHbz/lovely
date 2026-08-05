@@ -8,6 +8,7 @@ export const p04 = defineStage({
   skin: 'interrogation',
   setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
+  faces: { wolf: 'guilty', hedgehog: 'annoyed' },
   lines: [
     { speaker: 'nazoo', text: 'یک پیام چهارحرفی رسید. فقط همین: «اوکی».' },
     { speaker: 'hedgehog', text: 'به جان خودم من چیزی تایپ نکردم!' },
@@ -24,30 +25,30 @@ export const p04 = defineStage({
       options: [
         {
           id: 'investigate',
+          face: { wolf: 'annoyed', hedgehog: 'annoyed' },
           label: 'پس کی فرستاده؟ باید بررسی کنیم.',
           reaction:
             'پرونده‌ی مظنونان باز شد: ایرانسل، سیم‌کارت جابه‌جا شده، و روح سرگردان یک پیام پاک‌شده. هیچ‌کدام حاضر به همکاری نشدند.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'let-go',
+          face: { wolf: 'neutral', hedgehog: 'hurt' },
           label: 'مهم نیست. بی‌خیالش.',
           reaction:
             'گرگ گفت مهم نیست و بعد سه روز به آن فکر کرد. پرونده این را «بی‌خیالی ادعایی» ثبت کرد.',
           reactionSpeaker: 'nazoo',
           stamp: 'مشکوک',
-          draft: true,
         },
         {
           id: 'joke',
+          face: { wolf: 'smug', hedgehog: 'laughing' },
           label: 'اوکی. منم اوکی‌ام. همه اوکی‌ایم.',
           reaction:
             'شوخی گرفت. تنش خوابید. این تقریباً تنها باری است که گرگ با شوخی از یک بحران بیرون آمد.',
           reactionSpeaker: 'nazoo',
           stamp: 'ثبت شد',
-          draft: true,
         },
       ],
     },

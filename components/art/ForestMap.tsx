@@ -16,15 +16,25 @@ export function ForestMap({
   unlocked,
   onSelect,
   selectableIds,
+  onSecretFound,
   className = '',
 }: {
   unlocked: readonly string[];
   onSelect?: ((nodeId: string) => void) | undefined;
   /** فقط این نقطه‌ها قابل کلیک‌اند؛ بقیه تزئینی می‌مانند. */
   selectableIds?: readonly string[] | undefined;
+  /**
+   * Easter Egg فاز ۶ — گل‌سر مخفی.
+   *
+   * سند فازبندی نسخه ۱ گل‌سر را «در موزه» گذاشته بود، ولی در ساختار ۲۸ برگه‌ای
+   * هیچ موزه‌ای وجود ندارد. نزدیک‌ترین معادلش نقشه است: تنها جای پروژه که
+   * گشتن در آن معنی دارد. گل‌سر لای درخت‌های گوشه‌ی پایین-چپ است و هیچ نشانه‌ای
+   * ندارد؛ فقط کسی پیدایش می‌کند که واقعاً بگردد.
+   */
+  onSecretFound?: (() => void) | undefined;
   className?: string;
 }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() ?? false;
 
   return (
     <svg viewBox="0 0 100 100" className={className} role="img" aria-label="نقشه‌ی جنگل">
@@ -104,6 +114,32 @@ export function ForestMap({
           </g>
         );
       })}
+
+      {/* گل‌سر مخفی — بدون برچسب، لای درخت‌های گوشه. */}
+      {onSecretFound !== undefined && (
+        <g
+          onClick={onSecretFound}
+          style={{ cursor: 'pointer' }}
+          role="button"
+          tabIndex={0}
+          aria-label="یک چیز کوچک لای درخت‌ها"
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              onSecretFound();
+            }
+          }}
+        >
+          {/* سطح کلیک بزرگ‌تر از خود گل‌سر، وگرنه روی موبایل غیرقابل زدن است */}
+          <circle cx="21.5" cy="88.5" r="4" fill="transparent" />
+          <path
+            d="M20 88 q1.5 -2 3 0 q1.5 2 -1.5 2.4 q-3 -0.4 -1.5 -2.4 Z"
+            fill="var(--color-tigh)"
+            opacity="0.55"
+          />
+          <circle cx="21.5" cy="88.4" r="0.5" fill="var(--color-mahtab)" opacity="0.8" />
+        </g>
+      )}
     </svg>
   );
 }
