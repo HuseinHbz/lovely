@@ -17,6 +17,8 @@ export const p26 = defineStage({
   skin: 'mind',
   mapNode: 'trust',
   showSummary: true,
+  setting: { wolf: 'outside', hedgehog: 'outside' },
+  wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     { speaker: 'nazoo', text: 'پرونده‌ی شماره ۲۷. خلاصه‌ی وضعیت، به روایت دبیرخانه.' },
     {

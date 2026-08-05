@@ -11,6 +11,8 @@ export const p00 = defineStage({
   folder: 1,
   title: 'تشکیل پرونده',
   skin: 'cover',
+  setting: { wolf: 'work', hedgehog: 'hospital' },
+  wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
   lines: [
     { speaker: 'nazoo', text: 'بعضی داستان‌ها با یک نگاه شروع می‌شوند.' },
     { speaker: 'nazoo', text: 'بعضی‌ها با یک پیام.' },

@@ -11,6 +11,8 @@ export const p14 = defineStage({
   skin: 'mind',
   mapNode: 'dragon',
   achievement: 'gorg-sookhte',
+  setting: { wolf: 'home', hedgehog: 'home' },
+  wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     { speaker: 'hedgehog', text: 'کاش اژدها بودم.' },
     { speaker: 'wolf', text: 'می‌خوای به آتیش بکشونی یا قورت بدی؟' },

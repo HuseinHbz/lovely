@@ -16,7 +16,7 @@ export const p27 = defineStage({
   skin: 'ending',
   mapNode: 'next-chapter',
   achievement: 'mokhtome',
-  setting: 'outside',
+  setting: { wolf: 'outside', hedgehog: 'outside' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     {

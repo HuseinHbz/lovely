@@ -7,8 +7,8 @@ export const p18 = defineStage({
   title: 'برنامه‌ی بیرون',
   skin: 'map',
   mapNode: 'outing',
-  setting: 'outside',
-  wardrobe: { wolf: 'casual', hedgehog: 'casual' },
+  setting: { wolf: 'car', hedgehog: 'hospital' },
+  wardrobe: { wolf: 'casual', hedgehog: 'night-shift' },
   lines: [
     {
       speaker: 'nazoo',

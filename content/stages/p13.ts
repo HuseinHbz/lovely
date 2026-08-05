@@ -9,7 +9,7 @@ export const p13 = defineStage({
   folder: 3,
   title: 'قرارداد بغل',
   skin: 'interrogation',
-  setting: 'outside',
+  setting: { wolf: 'home', hedgehog: 'home' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     { speaker: 'wolf', text: 'نا محرمی دیگه وگرنه بغلت می‌کردم.' },

@@ -6,7 +6,7 @@ export const p04 = defineStage({
   folder: 2,
   title: 'حادثه‌ی «اوکی»',
   skin: 'interrogation',
-  setting: 'work',
+  setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
   lines: [
     { speaker: 'nazoo', text: 'یک پیام چهارحرفی رسید. فقط همین: «اوکی».' },

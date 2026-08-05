@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { Stage } from '@/content/schema';
 import { getNextStageId, reactionsFor, progressFor, FIRST_STAGE_ID } from '@/lib/engine';
@@ -253,16 +254,24 @@ export function StageView({ stage }: { stage: Stage }) {
         </motion.div>
       </AnimatePresence>
 
-      <Button
-        variant="quiet"
-        onClick={() => {
-          clearProgress();
-          router.push(`/story/${FIRST_STAGE_ID}`);
-          router.refresh();
-        }}
-      >
-        شروع دوباره
-      </Button>
+      <div className="flex flex-wrap items-center justify-center gap-4">
+        <Button
+          variant="quiet"
+          onClick={() => {
+            clearProgress();
+            router.push(`/story/${FIRST_STAGE_ID}`);
+            router.refresh();
+          }}
+        >
+          شروع دوباره
+        </Button>
+        <Link
+          href="/about-this"
+          className="font-ui text-sm text-jooheh-text underline decoration-jooheh underline-offset-4 hover:text-mahtab"
+        >
+          چه چیزی ذخیره می‌شود؟
+        </Link>
+      </div>
     </main>
   );
 }

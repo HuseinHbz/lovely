@@ -7,7 +7,7 @@ export const p12 = defineStage({
   title: 'چت شبانه',
   skin: 'mind',
   mapNode: 'night',
-  setting: 'night-shift',
+  setting: { wolf: 'home', hedgehog: 'home' },
   wardrobe: { wolf: 'casual', hedgehog: 'night-shift' },
   lines: [
     { speaker: 'nazoo', text: 'شب. هر دو خسته. ابی وسط، بدون هیچ نظری.' },

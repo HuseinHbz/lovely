@@ -11,7 +11,7 @@ export const p05 = defineStage({
   skin: 'interrogation',
   mapNode: 'court',
   achievement: 'ghazi',
-  setting: 'work',
+  setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
   lines: [
     { speaker: 'nazoo', text: 'اتاق تبدیل شد به دادگاه. چکش دست گرگ افتاد.' },

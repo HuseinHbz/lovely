@@ -6,7 +6,7 @@ export const p09 = defineStage({
   folder: 3,
   title: 'کل‌کل',
   skin: 'interrogation',
-  setting: 'outside',
+  setting: { wolf: 'home', hedgehog: 'home' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [{ speaker: 'hedgehog', text: 'همون آدمای آروم کسل‌کنندن.' }],
   interactions: [

@@ -7,7 +7,7 @@ export const p02 = defineStage({
   title: 'اولین چت',
   skin: 'interrogation',
   mapNode: 'first-chat',
-  setting: 'work',
+  setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'desk', hedgehog: 'nurse' },
   lines: [
     { speaker: 'nazoo', text: 'اولین مکالمه. هنوز هیچ‌کس نمی‌دانست دارد پرونده می‌سازد.' },

@@ -13,7 +13,7 @@ export const p20 = defineStage({
   skin: 'interrogation',
   mapNode: 'misunderstanding',
   achievement: 'ghahr-tarikhi',
-  setting: 'work',
+  setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'desk', hedgehog: 'nurse' },
   lines: [
     {

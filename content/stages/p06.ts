@@ -9,6 +9,8 @@ export const p06 = defineStage({
   folder: 2,
   title: 'من منم',
   skin: 'mind',
+  setting: { hedgehog: 'hospital' },
+  wardrobe: { hedgehog: 'nurse' },
   lines: [
     { speaker: 'hedgehog', text: 'من منم سننع.' },
     {

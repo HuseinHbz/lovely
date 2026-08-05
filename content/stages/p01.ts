@@ -16,7 +16,7 @@ export const p01 = defineStage({
   title: 'آشنایی در بیمارستان',
   skin: 'interrogation',
   mapNode: 'first-meeting',
-  setting: 'hospital',
+  setting: { wolf: 'hospital', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
   lines: [
     {

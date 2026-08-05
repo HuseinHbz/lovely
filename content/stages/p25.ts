@@ -11,7 +11,7 @@ export const p25 = defineStage({
   skin: 'interrogation',
   mapNode: 'repair',
   achievement: 'ashti',
-  setting: 'outside',
+  setting: { wolf: 'outside', hedgehog: 'outside' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [{ speaker: 'nazoo', text: 'حالا نوبت گرگ بود که سهم خودش را بپذیرد. فقط سهم خودش.' }],
   interactions: [

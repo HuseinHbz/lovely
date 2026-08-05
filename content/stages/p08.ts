@@ -6,6 +6,8 @@ export const p08 = defineStage({
   folder: 2,
   title: 'فهرست نزدیکان',
   skin: 'mind',
+  setting: { wolf: 'home', hedgehog: 'home' },
+  wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     { speaker: 'nazoo', text: 'فهرست نزدیکان ساخته شد. یک نفر داخلش بود.' },
     { speaker: 'nazoo', text: 'استوری منتشر شد: متن یک آهنگ، و اشاره‌ای که خیلی مستقیم نبود.' },

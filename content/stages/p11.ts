@@ -6,7 +6,7 @@ export const p11 = defineStage({
   folder: 3,
   title: 'خانواده‌ی آینده',
   skin: 'interrogation',
-  setting: 'outside',
+  setting: { wolf: 'home', hedgehog: 'home' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     { speaker: 'nazoo', text: 'بحث به مادرشوهر و خواهرشوهر و بچه‌ها رسید. کسی نپرسید چطور.' },

@@ -151,10 +151,22 @@ export const stageSchema = z
     /** نقطه‌ای از نقشه که با تمام‌شدن این مرحله روشن می‌شود. */
     mapNode: slug.optional(),
     /**
-     * محیط صحنه. لباس مجاز شخصیت‌ها را تعیین می‌کند؛ قاعده‌ی راهنمای شخصیت
-     * پایین در `superRefine` سنجیده می‌شود، پس نقض آن build را می‌شکند.
+     * محیط **هر شخصیت جدا**. اجباری است.
+     *
+     * صحنه‌های از راه دور (چت، ریپلای، تماس شبانه) دو نفر را در دو جا دارند؛
+     * با یک `setting` مشترک مجبور بودیم خالی بگذاریمش و قاعده‌ی لباس روی
+     * نیمی از داستان خاموش می‌شد. اگر شخصیتی اصلاً در صحنه نیست، همان یک
+     * کلید حذف می‌شود — نه کل فیلد.
      */
-    setting: z.enum(SETTINGS).optional(),
+    setting: z
+      .object({
+        wolf: z.enum(SETTINGS).optional(),
+        hedgehog: z.enum(SETTINGS).optional(),
+      })
+      .refine(
+        (value) => value.wolf !== undefined || value.hedgehog !== undefined,
+        'دست‌کم یکی از دو شخصیت باید محیطی داشته باشد',
+      ),
     /** لباس شخصیت‌ها در این مرحله. اگر ندهی، پیش‌فرض کامپوننت اعمال می‌شود. */
     wardrobe: z
       .object({
@@ -250,7 +262,7 @@ export const stageSchema = z
 
     // قاعده‌ی راهنمای شخصیت: گرگ در محیط کاری همیشه کت و شلوار، و جوجه‌تیغی
     // داخل بیمارستان همیشه روپوش پرستاری.
-    if (stage.setting !== undefined && stage.wardrobe !== undefined) {
+    if (stage.wardrobe !== undefined) {
       const violation = checkWardrobe(stage.setting, {
         wolf: stage.wardrobe.wolf,
         hedgehog: stage.wardrobe.hedgehog,

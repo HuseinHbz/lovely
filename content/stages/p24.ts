@@ -9,7 +9,7 @@ export const p24 = defineStage({
   folder: 6,
   title: 'ملاقات',
   skin: 'interrogation',
-  setting: 'outside',
+  setting: { wolf: 'outside', hedgehog: 'outside' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     { speaker: 'nazoo', text: 'بدون فشار. بدون بازجویی. بدون مرور تمام گذشته. تمرکز روی حال.' },

@@ -56,7 +56,7 @@
 ├── app/
 │   ├── globals.css        # @font-face + توکن‌ها + پایه
 │   ├── layout.tsx         # dir="rtl" lang="fa" + noindex
-│   └── page.tsx           # موقت؛ در فاز ۵ به ریدایرکت تبدیل می‌شود
+│   └── page.tsx           # از فاز ۵ فقط ریدایرکت به /story
 ├── docs/                  # مستند هر فاز + STORY.md + PHASE-PLAN.md
 ├── public/fonts/          # فونت‌های self-host + مجوزها
 ├── .env.example
@@ -99,4 +99,13 @@
 | `pnpm lint`      | ESLint               |
 | `pnpm format`    | Prettier روی کل مخزن |
 
-pre-commit هوک `lint-staged` و بعد `typecheck` را اجرا می‌کند.
+از فاز ۵:
+
+| دستور                | کار                                                                |
+| -------------------- | ------------------------------------------------------------------ |
+| `pnpm check`         | typecheck + lint + کنتراست + اعتبارسنجی محتوا + بازبینی حریم خصوصی |
+| `pnpm audit:privacy` | پنج بررسی حریم خصوصی                                               |
+| `pnpm drafts:list`   | فهرست گزینه‌های تأییدنشده                                          |
+| `pnpm drafts:check`  | همان، فقط کد خروج                                                  |
+
+pre-commit هوک `lint-staged` و بعد `typecheck` را اجرا می‌کند. `prebuild` نگهبان پیش‌نویس و بازبینی حریم خصوصی را اجرا می‌کند — یعنی build تولیدی با گزینه‌ی تأییدنشده یا با یک `fetch` خارجی تازه، می‌شکند.

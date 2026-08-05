@@ -8,7 +8,7 @@ export const p23 = defineStage({
   skin: 'interrogation',
   mapNode: 'conflict',
   achievement: 'ghafase-ketab',
-  setting: 'work',
+  setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'storm' },
   lines: [
     {

@@ -12,7 +12,7 @@ export const p17 = defineStage({
   title: 'حدس غذا',
   skin: 'interrogation',
   mapNode: 'food',
-  setting: 'outside',
+  setting: { wolf: 'outside', hedgehog: 'outside' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     { speaker: 'nazoo', text: 'سؤال ساده بود: الان چی می‌خوای؟' },

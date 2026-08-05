@@ -11,7 +11,7 @@ export const p19 = defineStage({
   folder: 4,
   title: 'مسئله‌ی رئیس',
   skin: 'interrogation',
-  setting: 'hospital',
+  setting: { wolf: 'hospital', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
   lines: [
     { speaker: 'hedgehog', text: 'من اصلاً نمی‌خوام رئیس بو ببره.' },

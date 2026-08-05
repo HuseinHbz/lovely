@@ -10,7 +10,7 @@ export const p10 = defineStage({
   title: 'هدیه و توجه',
   skin: 'interrogation',
   mapNode: 'gifts',
-  setting: 'outside',
+  setting: { wolf: 'outside', hedgehog: 'outside' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     { speaker: 'hedgehog', text: 'مهم تلاششه.' },

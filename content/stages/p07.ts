@@ -8,9 +8,7 @@ export const p07 = defineStage({
   skin: 'interrogation',
   mapNode: 'panda',
   achievement: 'panda-bigonah',
-  // `setting` عمداً خالی است: این صحنه از راه دور اتفاق می‌افتد. گرگ سر کار
-  // است و جوجه‌تیغی از بیرون ریپلای می‌زند، پس یک «محیط» مشترک ندارند و
-  // قاعده‌ی لباس — که درباره‌ی *دیده شدن در یک مکان* است — اینجا موضوعیت ندارد.
+  setting: { wolf: 'work', hedgehog: 'outside' },
   wardrobe: { wolf: 'desk', hedgehog: 'casual' },
   lines: [
     { speaker: 'nazoo', text: 'گرگ عکسی از میز کارش منتشر کرد. در تصویر، یک پاندا نشسته بود.' },

@@ -6,7 +6,7 @@ export const p21 = defineStage({
   folder: 5,
   title: 'ملکه',
   skin: 'interrogation',
-  setting: 'work',
+  setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
   lines: [
     { speaker: 'wolf', text: 'تو ملکه‌ای.' },

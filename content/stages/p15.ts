@@ -10,7 +10,7 @@ export const p15 = defineStage({
   title: 'کفش سفید',
   skin: 'map',
   achievement: 'kafsh-sefid',
-  setting: 'outside',
+  setting: { wolf: 'outside', hedgehog: 'outside' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     {

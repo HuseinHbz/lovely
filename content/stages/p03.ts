@@ -8,7 +8,7 @@ export const p03 = defineStage({
   skin: 'interrogation',
   mapNode: 'nicknames',
   achievement: 'bazras',
-  setting: 'work',
+  setting: { wolf: 'work', hedgehog: 'hospital' },
   wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
   lines: [
     { speaker: 'nazoo', text: 'دفتر القاب باز شد. هیچ‌کس نمی‌دانست دیگر بسته نمی‌شود.' },

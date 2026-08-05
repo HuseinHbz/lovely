@@ -6,7 +6,7 @@ export const p16 = defineStage({
   folder: 4,
   title: 'مجموعه کلاه',
   skin: 'interrogation',
-  setting: 'outside',
+  setting: { wolf: 'home', hedgehog: 'home' },
   wardrobe: { wolf: 'casual', hedgehog: 'casual' },
   lines: [
     { speaker: 'hedgehog', text: 'کلاهاتو پک کن برا من.' },
