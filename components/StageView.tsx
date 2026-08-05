@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/Button';
 import { SpeakerBubble } from '@/components/ui/SpeakerBubble';
 import { ProgressSeal } from '@/components/ui/ProgressSeal';
 import { ChoiceList } from '@/components/interactions/ChoiceList';
+import { SkinFrame } from '@/components/skins/SkinFrame';
 import { faNumber } from '@/lib/format';
 
 /**
@@ -27,6 +28,7 @@ export function StageView({ stage }: { stage: Stage }) {
   const goTo = useStoryStore((state) => state.goTo);
   const recordChoice = useStoryStore((state) => state.recordChoice);
   const choices = useStoryStore((state) => state.choices);
+  const unlockedNodes = useStoryStore((state) => state.unlockedNodes);
 
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<string[] | undefined>(undefined);
@@ -95,90 +97,92 @@ export function StageView({ stage }: { stage: Stage }) {
           exit={exit}
           className="flex w-full justify-center"
         >
-          <Card label={`پرونده‌ی محرمانه شماره ۲۷`} title={stage.title}>
-            <div className="flex flex-col gap-4">
-              {stage.lines.map((line, index) => (
-                <SpeakerBubble
-                  key={`${line.speaker}-${index}`}
-                  name={speakerName(line.speaker)}
-                  side={getCharacter(line.speaker).side}
-                >
-                  {line.text}
-                </SpeakerBubble>
-              ))}
-
-              <hr className="border-kaj/15" />
-
-              {interaction !== undefined &&
-                (interaction.kind === 'choice' || interaction.kind === 'pick') && (
-                  <ChoiceList
-                    interaction={interaction}
-                    onSubmit={handleSubmit}
-                    disabled={selected !== undefined}
-                  />
-                )}
-
-              {interaction !== undefined &&
-                interaction.kind !== 'choice' &&
-                interaction.kind !== 'pick' && (
-                  <p className="rounded-md border border-dashed border-jooheh/50 p-4 text-sm text-kaj/70">
-                    تعامل «{interaction.kind}» در فاز ۳ پیاده می‌شود.
-                  </p>
-                )}
-
-              <AnimatePresence>
-                {selected !== undefined && (
-                  <motion.div
-                    initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: reduceMotion ? 0.2 : 0.3 }}
-                    className="flex flex-col gap-4"
+          <SkinFrame skin={stage.skin} unlocked={unlockedNodes}>
+            <Card label="پرونده‌ی محرمانه شماره ۲۷" title={stage.title}>
+              <div className="flex flex-col gap-4">
+                {stage.lines.map((line, index) => (
+                  <SpeakerBubble
+                    key={`${line.speaker}-${index}`}
+                    name={speakerName(line.speaker)}
+                    side={getCharacter(line.speaker).side}
                   >
-                    {reactions.map((option) => (
-                      <SpeakerBubble
-                        key={option.id}
-                        side={
-                          option.reactionSpeaker === undefined
-                            ? 'center'
-                            : getCharacter(option.reactionSpeaker).side
-                        }
-                        name={
-                          option.reactionSpeaker === undefined
-                            ? undefined
-                            : speakerName(option.reactionSpeaker)
-                        }
-                      >
-                        {option.reaction}
-                      </SpeakerBubble>
-                    ))}
+                    {line.text}
+                  </SpeakerBubble>
+                ))}
 
-                    {isLastInteraction && stage.closing !== undefined && (
-                      <p className="text-base leading-[1.9] text-kaj">{stage.closing}</p>
-                    )}
+                <hr className="border-kaj/15" />
 
-                    {hasDraft && (
-                      <p className="rounded-md border border-dashed border-mohr/60 px-3 py-2 font-ui text-xs text-mohr">
-                        این واکنش پیش‌نویس است و هنوز تأیید نشده.
-                      </p>
-                    )}
+                {interaction !== undefined &&
+                  (interaction.kind === 'choice' || interaction.kind === 'pick') && (
+                    <ChoiceList
+                      interaction={interaction}
+                      onSubmit={handleSubmit}
+                      disabled={selected !== undefined}
+                    />
+                  )}
 
-                    <div className="flex flex-wrap items-center gap-3">
-                      {(!isLastInteraction || nextStageId !== undefined) && (
-                        <Button variant="solid" onClick={handleAdvance}>
-                          {isLastInteraction ? 'مرحله‌ی بعد' : 'ادامه'}
-                        </Button>
+                {interaction !== undefined &&
+                  interaction.kind !== 'choice' &&
+                  interaction.kind !== 'pick' && (
+                    <p className="rounded-md border border-dashed border-jooheh/50 p-4 text-sm text-kaj/70">
+                      تعامل «{interaction.kind}» در فاز ۳ پیاده می‌شود.
+                    </p>
+                  )}
+
+                <AnimatePresence>
+                  {selected !== undefined && (
+                    <motion.div
+                      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: reduceMotion ? 0.2 : 0.3 }}
+                      className="flex flex-col gap-4"
+                    >
+                      {reactions.map((option) => (
+                        <SpeakerBubble
+                          key={option.id}
+                          side={
+                            option.reactionSpeaker === undefined
+                              ? 'center'
+                              : getCharacter(option.reactionSpeaker).side
+                          }
+                          name={
+                            option.reactionSpeaker === undefined
+                              ? undefined
+                              : speakerName(option.reactionSpeaker)
+                          }
+                        >
+                          {option.reaction}
+                        </SpeakerBubble>
+                      ))}
+
+                      {isLastInteraction && stage.closing !== undefined && (
+                        <p className="text-base leading-[1.9] text-kaj">{stage.closing}</p>
                       )}
-                      {isLastInteraction && nextStageId === undefined && (
-                        <p className="font-ui text-sm text-kaj/70">
-                          فعلاً پرونده تا همین‌جا نوشته شده. بقیه‌ی مراحل در فاز ۴ اضافه می‌شوند.
+
+                      {hasDraft && (
+                        <p className="rounded-md border border-dashed border-mohr/60 px-3 py-2 font-ui text-xs text-mohr">
+                          این واکنش پیش‌نویس است و هنوز تأیید نشده.
                         </p>
                       )}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </Card>
+
+                      <div className="flex flex-wrap items-center gap-3">
+                        {(!isLastInteraction || nextStageId !== undefined) && (
+                          <Button variant="solid" onClick={handleAdvance}>
+                            {isLastInteraction ? 'مرحله‌ی بعد' : 'ادامه'}
+                          </Button>
+                        )}
+                        {isLastInteraction && nextStageId === undefined && (
+                          <p className="font-ui text-sm text-kaj/70">
+                            فعلاً پرونده تا همین‌جا نوشته شده. بقیه‌ی مراحل در فاز ۴ اضافه می‌شوند.
+                          </p>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </Card>
+          </SkinFrame>
         </motion.div>
       </AnimatePresence>
 
