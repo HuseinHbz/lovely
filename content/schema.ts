@@ -6,6 +6,7 @@ import {
   checkWardrobe,
   describeViolation,
 } from '@/lib/wardrobe';
+import { METER_IDS } from './meters';
 
 /**
  * قرارداد محتوا — هسته‌ی پروژه.
@@ -23,12 +24,12 @@ export const SKIN_IDS = ['cover', 'interrogation', 'map', 'mind', 'ending'] as c
 export const skinIdSchema = z.enum(SKIN_IDS);
 export type SkinId = z.infer<typeof skinIdSchema>;
 
-export const SPEAKERS = ['nazoo', 'wolf', 'hedgehog', 'owl', 'squirrel', 'system'] as const;
+export const SPEAKERS = ['nazoo', 'wolf', 'hedgehog', 'owl', 'abi', 'system'] as const;
 export const speakerSchema = z.enum(SPEAKERS);
 export type Speaker = z.infer<typeof speakerSchema>;
 
-/** شناسه‌ی مرحله: `s01` تا `s20`. */
-export const stageIdSchema = z.string().regex(/^s\d{2}$/, 'شناسه‌ی مرحله باید مثل s01 باشد');
+/** شناسه‌ی برگه: `p00` تا `p27`. */
+export const stageIdSchema = z.string().regex(/^p\d{2}$/, 'شناسه‌ی برگه باید مثل p00 باشد');
 
 const slug = z.string().min(1);
 const text = z.string().min(1);
@@ -143,8 +144,8 @@ export type Ending = z.infer<typeof endingSchema>;
 export const stageSchema = z
   .object({
     id: stageIdSchema,
-    /** فصل داستان. سند ۵ فصل داشت؛ داستان تحویلی ۹ فصل دارد. */
-    act: z.number().int().min(1).max(9),
+    /** دفتر پرونده — `MERGED-SPEC` بخش ۶: شش دفتر، بیست‌وهشت برگه. */
+    folder: z.number().int().min(1).max(6),
     title: text,
     skin: skinIdSchema,
     /** نقطه‌ای از نقشه که با تمام‌شدن این مرحله روشن می‌شود. */
@@ -166,9 +167,23 @@ export const stageSchema = z
      * افزوده نسبت به سند: آرایه به‌جای یک تعامل.
      * مرحله ۲۰ داستان دو تعامل پشت سر هم دارد (سفارش، بعد پاسخ نهایی).
      */
-    interactions: z.array(interactionSchema).min(1),
+    interactions: z.array(interactionSchema),
     closing: text.optional(),
-    /** فقط مرحله‌ی پایانی: دکمه‌های پایان باز. */
+    /**
+     * لایه‌ی پاندا — `MERGED-SPEC` بخش ۲.
+     * پاندا بعد از هر صحنه با لحن منشی دادگاه وارد می‌شود و همان صحنه را
+     * به‌عنوان «مدرک» ثبت می‌کند. این لایه است که طنز پرونده‌ای را اضافه می‌کند
+     * بدون اینکه به داستان اصلی دست بزند.
+     */
+    panda: text.optional(),
+    /** نشانی که با تمام‌شدن این برگه باز می‌شود. */
+    achievement: slug.optional(),
+    /**
+     * دلتای شاخص‌های طنز. **هیچ اثر مکانیکی ندارد** — نه چیزی قفل می‌کند، نه
+     * مسیری را عوض می‌کند. فقط برگه‌ی خلاصه‌ی پایانی از رویشان ساخته می‌شود.
+     */
+    meters: z.record(z.enum(METER_IDS), z.number().int()).optional(),
+    /** فقط برگه‌ی پایانی: چهار پایان هم‌ارزش. */
     endings: z.array(endingSchema).min(2).optional(),
     status: z.enum(['ready', 'pending-content']).default('ready'),
   })

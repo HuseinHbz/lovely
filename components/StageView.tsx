@@ -11,6 +11,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { SpeakerBubble } from '@/components/ui/SpeakerBubble';
 import { ProgressSeal } from '@/components/ui/ProgressSeal';
+import { PandaLog } from '@/components/ui/PandaLog';
 import { ChoiceList } from '@/components/interactions/ChoiceList';
 import { SkinFrame } from '@/components/skins/SkinFrame';
 import { faNumber } from '@/lib/format';
@@ -27,6 +28,8 @@ export function StageView({ stage }: { stage: Stage }) {
 
   const goTo = useStoryStore((state) => state.goTo);
   const recordChoice = useStoryStore((state) => state.recordChoice);
+  const markSeen = useStoryStore((state) => state.markSeen);
+  const applyStage = useStoryStore((state) => state.applyStage);
   const choices = useStoryStore((state) => state.choices);
   const unlockedNodes = useStoryStore((state) => state.unlockedNodes);
 
@@ -41,6 +44,8 @@ export function StageView({ stage }: { stage: Stage }) {
   }, [stage.id, goTo]);
 
   const interaction = stage.interactions[step];
+  /** برگه‌ی صرفاً روایی — `MERGED-SPEC` بخش ۶ برای برگه ۰۰ تعاملی نگذاشته. */
+  const isNarrationOnly = stage.interactions.length === 0;
   const isLastInteraction = step >= stage.interactions.length - 1;
   const nextStageId = getNextStageId(stage.id);
   const progress = progressFor(stage.id, choices);
@@ -65,6 +70,12 @@ export function StageView({ stage }: { stage: Stage }) {
   }
 
   function handleAdvance() {
+    applyStage(stage.id);
+    if (isNarrationOnly) {
+      markSeen(stage.id);
+      if (nextStageId !== undefined) router.push(`/story/${nextStageId}`);
+      return;
+    }
     if (!isLastInteraction) {
       setStep((current) => current + 1);
       setSelected(undefined);
@@ -82,9 +93,9 @@ export function StageView({ stage }: { stage: Stage }) {
       <div className="flex w-full max-w-card flex-col gap-2">
         <ProgressSeal total={progress.total} done={progress.done} current={progress.current} />
         <p className="font-ui text-xs tracking-[0.04em] text-jooheh-text">
-          مرحله {faNumber(progress.current)} از {faNumber(progress.total)}
+          برگه {faNumber(progress.current)} از {faNumber(progress.total)}
           {progress.implemented < progress.total
-            ? ` — فعلاً ${faNumber(progress.implemented)} مرحله پیاده شده`
+            ? ` — فعلاً ${faNumber(progress.implemented)} برگه پیاده شده`
             : ''}
         </p>
       </div>
@@ -108,14 +119,30 @@ export function StageView({ stage }: { stage: Stage }) {
                 {stage.lines.map((line, index) => (
                   <SpeakerBubble
                     key={`${line.speaker}-${index}`}
-                    name={speakerName(line.speaker)}
+                    // وقتی چند خط پشت سر هم از یک گوینده است، نام فقط یک بار می‌آید.
+                    name={
+                      stage.lines[index - 1]?.speaker === line.speaker
+                        ? undefined
+                        : speakerName(line.speaker)
+                    }
                     side={getCharacter(line.speaker).side}
                   >
                     {line.text}
                   </SpeakerBubble>
                 ))}
 
-                <hr className="border-kaj/15" />
+                {!isNarrationOnly && <hr className="border-kaj/15" />}
+
+                {isNarrationOnly && (
+                  <div className="flex flex-col gap-4">
+                    {stage.panda !== undefined && <PandaLog>{stage.panda}</PandaLog>}
+                    {nextStageId !== undefined && (
+                      <Button variant="solid" onClick={handleAdvance}>
+                        برگه‌ی بعد
+                      </Button>
+                    )}
+                  </div>
+                )}
 
                 {interaction !== undefined &&
                   (interaction.kind === 'choice' || interaction.kind === 'pick') && (
@@ -130,7 +157,7 @@ export function StageView({ stage }: { stage: Stage }) {
                   interaction.kind !== 'choice' &&
                   interaction.kind !== 'pick' && (
                     <p className="rounded-md border border-dashed border-jooheh/50 p-4 text-sm text-kaj/70">
-                      تعامل «{interaction.kind}» در فاز ۳ پیاده می‌شود.
+                      تعامل «{interaction.kind}» هنوز پیاده نشده.
                     </p>
                   )}
 
@@ -164,6 +191,10 @@ export function StageView({ stage }: { stage: Stage }) {
                         <p className="text-base leading-[1.9] text-kaj">{stage.closing}</p>
                       )}
 
+                      {isLastInteraction && stage.panda !== undefined && (
+                        <PandaLog>{stage.panda}</PandaLog>
+                      )}
+
                       {hasDraft && (
                         <p className="rounded-md border border-dashed border-mohr/60 px-3 py-2 font-ui text-xs text-mohr">
                           این واکنش پیش‌نویس است و هنوز تأیید نشده.
@@ -173,12 +204,13 @@ export function StageView({ stage }: { stage: Stage }) {
                       <div className="flex flex-wrap items-center gap-3">
                         {(!isLastInteraction || nextStageId !== undefined) && (
                           <Button variant="solid" onClick={handleAdvance}>
-                            {isLastInteraction ? 'مرحله‌ی بعد' : 'ادامه'}
+                            {isLastInteraction ? 'برگه‌ی بعد' : 'ادامه'}
                           </Button>
                         )}
                         {isLastInteraction && nextStageId === undefined && (
                           <p className="font-ui text-sm text-kaj/70">
-                            فعلاً پرونده تا همین‌جا نوشته شده. بقیه‌ی مراحل در فاز ۴ اضافه می‌شوند.
+                            فعلاً پرونده تا همین‌جا نوشته شده. بقیه‌ی برگه‌ها در فاز ۴ اضافه
+                            می‌شوند.
                           </p>
                         )}
                       </div>

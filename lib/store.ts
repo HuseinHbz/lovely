@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { FIRST_STAGE_ID, unlockedNodesFor } from './engine';
+import { FIRST_STAGE_ID, unlockedNodesFor, getStage } from './engine';
 
 /**
  * وضعیت پیشرفت کاربر.
@@ -12,13 +12,21 @@ import { FIRST_STAGE_ID, unlockedNodesFor } from './engine';
  * تنها راه خارج شدنش از دستگاه کاربر این است که خودش فایل را بردارد.
  */
 
-export const STORAGE_KEY = 'wolf-hedgehog-v1';
+export const STORAGE_KEY = 'wolf-hedgehog-v2';
 
 type StoryState = {
   currentStage: string;
-  /** به‌ازای هر مرحله، انتخاب هر تعامل به ترتیب. */
+  /** به‌ازای هر برگه، انتخاب هر تعامل به ترتیب. */
   choices: Record<string, string[]>;
   unlockedNodes: string[];
+  /** نشان‌های باز‌شده — `content/achievements.ts`. */
+  achievements: string[];
+  /**
+   * شاخص‌های طنز پرونده. `MERGED-SPEC` بخش ۴:
+   * هیچ‌کدام هیچ صحنه، پایان یا محتوایی را قفل نمی‌کنند و هیچ عددی نمی‌گوید
+   * «رد شدی». فقط برگه‌ی خلاصه‌ی پایانی از رویشان ساخته می‌شود.
+   */
+  meters: Record<string, number>;
   /** افکت صوتی — پیش‌فرض خاموش (بخش فاز ۶). */
   soundOn: boolean;
 };
@@ -28,6 +36,10 @@ type StoryActions = {
   /** انتخاب یک تعامل را ثبت می‌کند. `interactionIndex` جای آن در آرایه‌ی تعامل‌هاست. */
   recordChoice: (stageId: string, interactionIndex: number, selected: readonly string[]) => void;
   choiceFor: (stageId: string, interactionIndex: number) => string[] | undefined;
+  /** برگه‌ی صرفاً روایی را تمام‌شده علامت می‌زند (تعاملی ندارد که ثبت شود). */
+  markSeen: (stageId: string) => void;
+  /** نشان و شاخص‌های یک برگه را اعمال می‌کند. هیچ‌کدام مسیر را عوض نمی‌کنند. */
+  applyStage: (stageId: string) => void;
   toggleSound: () => void;
   reset: () => void;
 };
@@ -36,6 +48,8 @@ const initialState: StoryState = {
   currentStage: FIRST_STAGE_ID,
   choices: {},
   unlockedNodes: [],
+  achievements: [],
+  meters: {},
   soundOn: false,
 };
 
@@ -60,6 +74,31 @@ export const useStoryStore = create<StoryState & StoryActions>()(
         return raw === undefined || raw === '' ? undefined : raw.split('،');
       },
 
+      markSeen: (stageId) =>
+        set((state) => {
+          if ((state.choices[stageId] ?? []).length > 0) return state;
+          const choices = { ...state.choices, [stageId]: ['—'] };
+          return { choices, unlockedNodes: [...unlockedNodesFor(choices)] };
+        }),
+
+      applyStage: (stageId) =>
+        set((state) => {
+          const stage = getStage(stageId);
+          if (stage === undefined) return state;
+
+          const achievements = [...state.achievements];
+          if (stage.achievement !== undefined && !achievements.includes(stage.achievement)) {
+            achievements.push(stage.achievement);
+          }
+
+          const meters = { ...state.meters };
+          for (const [id, delta] of Object.entries(stage.meters ?? {})) {
+            meters[id] = (meters[id] ?? 0) + delta;
+          }
+
+          return { achievements, meters };
+        }),
+
       toggleSound: () => set((state) => ({ soundOn: !state.soundOn })),
 
       reset: () => set({ ...initialState }),
@@ -67,11 +106,13 @@ export const useStoryStore = create<StoryState & StoryActions>()(
     {
       name: STORAGE_KEY,
       storage: createJSONStorage(() => localStorage),
-      version: 1,
+      version: 2,
       partialize: (state) => ({
         currentStage: state.currentStage,
         choices: state.choices,
         unlockedNodes: state.unlockedNodes,
+        achievements: state.achievements,
+        meters: state.meters,
         soundOn: state.soundOn,
       }),
     },

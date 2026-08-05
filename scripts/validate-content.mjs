@@ -19,6 +19,8 @@ const strict = process.argv.includes('--strict');
 
 const { STAGES, TOTAL_STAGES } = await import('../content/index.ts');
 const { MAP_NODE_IDS, MAP_NODES } = await import('../content/map.ts');
+const { ACHIEVEMENTS } = await import('../content/achievements.ts');
+const { METERS } = await import('../content/meters.ts');
 
 const errors = [];
 const drafts = [];
@@ -60,7 +62,12 @@ for (const stage of STAGES) {
   }
 
   if (stage.status === 'pending-content') {
-    drafts.push(`${where}: کل مرحله pending-content است`);
+    drafts.push(`${where}: کل برگه pending-content است`);
+  }
+
+  // `MERGED-SPEC` بخش ۲: هر برگه لایه‌ی پاندا دارد.
+  if (stage.panda === undefined || stage.panda.trim() === '') {
+    drafts.push(`${where}: لایه‌ی پاندا نوشته نشده`);
   }
 }
 
@@ -69,7 +76,21 @@ const unlockable = new Set(
 );
 const unreachable = MAP_NODES.filter((node) => !unlockable.has(node.id));
 
-console.log(`\nاعتبارسنجی محتوا — ${STAGES.length} مرحله از ${TOTAL_STAGES}\n`);
+/**
+ * `MERGED-SPEC` بخش ۴ قاعده ۱: هیچ شاخصی هیچ‌چیز را قفل نمی‌کند.
+ * پس شرط باز شدن هر نشان باید یک برگه باشد، نه یک عدد.
+ */
+const stageIds = new Set(STAGES.map((stage) => stage.id));
+const pendingAchievements = ACHIEVEMENTS.filter((item) => !stageIds.has(item.unlockedBy));
+
+console.log(`\nاعتبارسنجی محتوا — ${STAGES.length} برگه از ${TOTAL_STAGES}\n`);
+console.log(
+  `شاخص‌های طنز: ${METERS.length} · نشان‌ها: ${ACHIEVEMENTS.length}` +
+    (pendingAchievements.length > 0
+      ? ` (${pendingAchievements.length} نشان منتظر برگه‌ای که هنوز ساخته نشده)`
+      : ''),
+);
+console.log('');
 
 if (unreachable.length > 0) {
   console.log(`نقاط نقشه‌ای که هنوز هیچ مرحله‌ای روشنشان نمی‌کند (${unreachable.length}):`);

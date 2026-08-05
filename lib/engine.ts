@@ -11,7 +11,7 @@ import type { Interaction, Option, Stage } from '@/content/schema';
  * انتخاب کاربر. هیچ گزینه‌ای مسیر را نمی‌بندد و هیچ‌کس به عقب برنمی‌گردد.
  */
 
-export const FIRST_STAGE_ID = STAGES[0]?.id ?? 's01';
+export const FIRST_STAGE_ID = STAGES[0]?.id ?? 'p00';
 
 export function getStage(stageId: string): Stage | undefined {
   return STAGES.find((stage) => stage.id === stageId);
@@ -101,11 +101,14 @@ export function reactionsFor(
 
 export type Choices = Readonly<Record<string, readonly string[]>>;
 
-/** مرحله وقتی تمام‌شده حساب می‌شود که برای هر تعاملش انتخابی ثبت شده باشد. */
+/**
+ * برگه وقتی تمام‌شده حساب می‌شود که برای هر تعاملش انتخابی ثبت شده باشد.
+ * برگه‌ی صرفاً روایی (بدون تعامل) با یک بار دیده شدن تمام می‌شود.
+ */
 export function isStageComplete(stage: Stage, choices: Choices): boolean {
   const recorded = choices[stage.id];
   if (recorded === undefined) return false;
-  return recorded.length >= stage.interactions.length;
+  return recorded.length >= Math.max(stage.interactions.length, 1);
 }
 
 export function completedStageIds(choices: Choices): readonly string[] {
