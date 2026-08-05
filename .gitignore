@@ -21,3 +21,8 @@ yarn-error.log*
 
 .vercel
 coverage/
+
+# فاز ۷ — تست‌ها
+tests/node_modules/
+# فهرست محلی نام‌های ممنوعه؛ هرگز commit نمی‌شود
+.forbidden-names

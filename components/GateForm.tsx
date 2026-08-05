@@ -49,7 +49,7 @@ export function GateForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-      <label htmlFor="gate-token" className="font-ui text-xs tracking-[0.04em] text-kaj/70">
+      <label htmlFor="gate-token" className="font-ui text-xs tracking-[0.04em] text-kaj/80">
         کد دسترسی
       </label>
       <input

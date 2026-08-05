@@ -81,7 +81,7 @@ export function ChoiceList({
       </ul>
 
       {interaction.kind === 'pick' && (
-        <p className="text-sm text-kaj/70 italic">{interaction.note}</p>
+        <p className="text-sm text-kaj/80 italic">{interaction.note}</p>
       )}
 
       {isMulti && (
@@ -93,7 +93,7 @@ export function ChoiceList({
           >
             ثبت در پرونده
           </Button>
-          <span className="font-ui text-xs text-kaj/70">
+          <span className="font-ui text-xs text-kaj/80">
             {faNumber(selected.length)} از {faNumber(max)} انتخاب شد
             {min > 1 ? ` — حداقل ${faNumber(min)} مورد` : ''}
           </span>

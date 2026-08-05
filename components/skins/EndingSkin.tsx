@@ -37,7 +37,7 @@ function Bench() {
 export function EndingSkin({ children }: { children: ReactNode }) {
   return (
     <section className="relative flex min-h-dvh w-full flex-col items-center gap-6 bg-mahtab px-safe py-10 text-shab">
-      <p className="font-ui text-xs tracking-[0.04em] text-kaj/70">هوا روشن شد</p>
+      <p className="font-ui text-xs tracking-[0.04em] text-kaj/80">هوا روشن شد</p>
       <Bench />
       <div className="flex w-full justify-center">{children}</div>
     </section>

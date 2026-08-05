@@ -36,8 +36,22 @@ export function ForestMap({
 }) {
   const reduceMotion = useReducedMotion() ?? false;
 
+  // نقش SVG به محتوایش بستگی دارد.
+  //
+  // `role="img"` یعنی «این یک تصویر واحد است» و محتوایش برای صفحه‌خوان
+  // presentational می‌شود — پس یک کنترل focusable داخلش (گل‌سر) هم غیرقابل
+  // دسترس می‌ماند و هم axe آن را `nested-interactive` می‌گیرد. وقتی چیز
+  // تعاملی داخل نقشه هست، نقش به `group` می‌رود که اجازه‌ی فرزند focusable
+  // دارد. فهرست متنی نقاط هم در `MapSkin` جداگانه هست.
+  const interactive = onSecretFound !== undefined || onSelect !== undefined;
+
   return (
-    <svg viewBox="0 0 100 100" className={className} role="img" aria-label="نقشه‌ی جنگل">
+    <svg
+      viewBox="0 0 100 100"
+      className={className}
+      role={interactive ? 'group' : 'img'}
+      aria-label="نقشه‌ی جنگل"
+    >
       {/* زمین */}
       <rect width="100" height="100" fill="var(--color-kaj)" opacity="0.35" rx="2" />
 

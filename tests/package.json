@@ -1,0 +1,13 @@
+{
+  "name": "wolf-hedgehog-tests",
+  "private": true,
+  "type": "module",
+  "description": "تست‌های مرورگری فاز ۷. عمداً از package.json اصلی جداست تا نصب روی سرور تولید هیچ‌وقت Playwright را نکشد.",
+  "scripts": {
+    "test": "node run.mjs"
+  },
+  "dependencies": {
+    "axe-core": "^4.12.1",
+    "playwright": "^1.56.1"
+  }
+}

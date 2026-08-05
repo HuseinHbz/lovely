@@ -28,7 +28,7 @@ export function Card({
       {(label ?? title) !== undefined && (
         <header className="relative mb-5">
           {label !== undefined && (
-            <p className="font-ui text-xs tracking-[0.04em] text-kaj/70">{label}</p>
+            <p className="font-ui text-xs tracking-[0.04em] text-kaj/80">{label}</p>
           )}
           {title !== undefined && (
             <h1 className="mt-1 font-display text-xl leading-tight font-bold text-kaj">{title}</h1>

@@ -212,7 +212,7 @@ export function StageView({ stage }: { stage: Stage }) {
 
                   {interaction !== undefined &&
                     (interaction.kind === 'sort' || interaction.kind === 'repeat') && (
-                      <p className="rounded-md border border-dashed border-jooheh/50 p-4 text-sm text-kaj/70">
+                      <p className="rounded-md border border-dashed border-jooheh/50 p-4 text-sm text-kaj/80">
                         تعامل «{interaction.kind}» در هیچ برگه‌ای استفاده نشده.
                       </p>
                     )}
@@ -277,7 +277,7 @@ export function StageView({ stage }: { stage: Stage }) {
                             </Button>
                           )}
                           {isLastInteraction && nextStageId === undefined && (
-                            <p className="font-ui text-sm text-kaj/70">
+                            <p className="font-ui text-sm text-kaj/80">
                               فعلاً پرونده تا همین‌جا نوشته شده. بقیه‌ی برگه‌ها در فاز ۴ اضافه
                               می‌شوند.
                             </p>
@@ -307,7 +307,8 @@ export function StageView({ stage }: { stage: Stage }) {
         <SoundToggle />
         <Link
           href="/about-this"
-          className="font-ui text-sm text-jooheh-text underline decoration-jooheh underline-offset-4 hover:text-mahtab"
+          // ارتفاع کمینه ۲۴px برای هدف لمسی (WCAG 2.2 معیار ۲٫۵٫۸).
+          className="inline-flex min-h-11 items-center font-ui text-sm text-jooheh-text underline decoration-jooheh underline-offset-4 hover:text-mahtab"
         >
           چه چیزی ذخیره می‌شود؟
         </Link>

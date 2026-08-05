@@ -40,7 +40,7 @@ export function EndingChoice({
         )}
 
         <div className="flex flex-wrap items-center gap-3">
-          <span className="font-ui text-xs tracking-[0.04em] text-kaj/70">وضعیت پرونده</span>
+          <span className="font-ui text-xs tracking-[0.04em] text-kaj/80">وضعیت پرونده</span>
           <span className="rounded-full border border-tigh px-3 py-1 font-ui text-xs text-kaj">
             باز، برای یک فصل دیگر
           </span>
@@ -60,7 +60,7 @@ export function EndingChoice({
           {ending.label}
         </Button>
       ))}
-      <p className="font-ui text-xs text-kaj/70">
+      <p className="font-ui text-xs text-kaj/80">
         هر چهار پایان در دسترس‌اند و هیچ‌کدام بهتر از بقیه نیست.
       </p>
     </div>

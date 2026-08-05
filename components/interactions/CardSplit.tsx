@@ -92,7 +92,7 @@ export function CardSplit({
                 onClick={() => drop(bucket.id)}
                 className="flex min-h-24 w-full cursor-pointer flex-col gap-1 rounded-md border border-dashed border-kaj/35 p-3 text-start transition-colors enabled:hover:border-tigh disabled:cursor-default"
               >
-                <span className="font-ui text-xs tracking-[0.04em] text-kaj/70">
+                <span className="font-ui text-xs tracking-[0.04em] text-kaj/80">
                   {bucket.label}
                 </span>
                 {inside.map((card) => (
@@ -107,7 +107,7 @@ export function CardSplit({
       </ul>
 
       {held !== undefined && (
-        <p className="font-ui text-xs text-kaj/70">حالا کشوی مقصد را انتخاب کن.</p>
+        <p className="font-ui text-xs text-kaj/80">حالا کشوی مقصد را انتخاب کن.</p>
       )}
 
       {rejection !== undefined && (

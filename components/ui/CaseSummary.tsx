@@ -40,7 +40,7 @@ export function CaseSummary() {
             <li key={meter.id} className="flex flex-col gap-1">
               <div className="flex items-baseline justify-between gap-3">
                 <span className="text-sm text-kaj">{meter.label}</span>
-                <span className="font-ui text-xs text-kaj/70">
+                <span className="font-ui text-xs text-kaj/80">
                   {meter.display === 'percent' && `${faNumber(percent)}٪`}
                   {meter.display === 'count' && `${faNumber(Math.max(raw, 0))} مدرک`}
                   {meter.display === 'rank' && (raw >= 3 ? 'قابل قبول' : 'قابل بحث')}
@@ -57,7 +57,7 @@ export function CaseSummary() {
       </ul>
 
       <div className="flex flex-col gap-2">
-        <p className="font-ui text-xs tracking-[0.04em] text-kaj/70">
+        <p className="font-ui text-xs tracking-[0.04em] text-kaj/80">
           نشان‌ها — {faNumber(unlocked.length)} از {faNumber(ACHIEVEMENTS.length)}
         </p>
         <ul className="flex flex-wrap gap-2">
@@ -68,7 +68,10 @@ export function CaseSummary() {
                 key={item.id}
                 title={item.note}
                 className={`rounded-full border px-3 py-1 font-ui text-xs ${
-                  isOn ? 'border-tigh bg-tigh/15 text-kaj' : 'border-kaj/25 text-kaj/45'
+                  // حالت «نگرفته» قبلاً `text-kaj/45` بود که روی کاغذ به ۲٫۶
+                  // می‌رسید و خواندنش سخت بود. تفاوت دو حالت حالا از حاشیه و
+                  // پس‌زمینه می‌آید، نه از کم‌رنگ کردن متن تا مرز ناخوانایی.
+                  isOn ? 'border-tigh bg-tigh/15 text-kaj' : 'border-kaj/25 text-kaj/75'
                 }`}
               >
                 {item.label}
@@ -78,7 +81,7 @@ export function CaseSummary() {
         </ul>
       </div>
 
-      <p className="text-sm text-kaj/70 italic">
+      <p className="text-sm text-kaj/80 italic">
         هیچ‌کدام از این اعداد نمره نیست و هیچ‌کدام هیچ پایانی را قفل نمی‌کند.
       </p>
     </section>

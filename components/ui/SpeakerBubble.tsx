@@ -47,7 +47,7 @@ export function SpeakerBubble({
     <div className={`flex max-w-[46ch] flex-col gap-1 ${sides[side]}`}>
       {name !== undefined && (
         <span
-          className={`font-ui text-xs tracking-[0.04em] ${tone === 'paper' ? 'text-kaj/70' : 'text-jooheh-text'}`}
+          className={`font-ui text-xs tracking-[0.04em] ${tone === 'paper' ? 'text-kaj/80' : 'text-jooheh-text'}`}
         >
           {name}
         </span>
