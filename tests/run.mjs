@@ -235,6 +235,8 @@ const DEVICES = [
       '/story/p26',
       '/story/p27',
       '/about-this',
+      '/museum',
+      '/replay',
     ]) {
       await page.goto(`${BASE}${path}`, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(400);
@@ -260,7 +262,13 @@ const DEVICES = [
       `${device.name} (${device.width}px) — بدون سرریز افقی`,
       `بیشینه ${worstOverflow}px`,
     );
-    if (smallTargets > 0) notes.push(`${device.name}: ${smallTargets} هدف کوچک‌تر از ۲۴px`);
+    // معیار ۲٫۵٫۸ WCAG 2.2 (سطح AA). قبلاً فقط یادداشت بود و برای همین وقتی
+    // پیوند «موزه» با پهنای ۲۴px اضافه شد، تست سبز ماند. حالا واقعاً می‌شکند.
+    check(
+      smallTargets === 0,
+      `${device.name} — هیچ هدف لمسی زیر ۲۴px نیست`,
+      `${smallTargets} مورد`,
+    );
     await ctx.close();
   }
 }
@@ -284,12 +292,13 @@ console.log(bold('\n۳. دسترس‌پذیری — axe، Tab، focus\n'));
     '/story/p27',
     '/about-this',
     '/expired',
+    '/museum',
+    '/replay',
   ]) {
     await page.goto(`${BASE}${path}`, { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(450);
     await page.evaluate(axeSource);
     const result = await page.evaluate(async () => {
-       
       return await axe.run(document, {
         resultTypes: ['violations'],
         runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] },
@@ -452,6 +461,8 @@ console.log(bold('\n۵. شبکه — صفر درخواست خارجی\n'));
     '/story/p26',
     '/story/p27',
     '/about-this',
+    '/museum',
+    '/replay',
   ]) {
     await page.goto(`${BASE}${path}`, { waitUntil: 'networkidle' }).catch(() => {});
     await page.waitForTimeout(250);

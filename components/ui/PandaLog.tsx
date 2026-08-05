@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Panda } from '@/components/art/Panda';
 import { useStoryStore } from '@/lib/store';
@@ -23,8 +23,15 @@ const SECRET_CLICKS = 5;
 export function PandaLog({ children }: { children: ReactNode }) {
   const reduceMotion = useReducedMotion() ?? false;
   const soundOn = useStoryStore((state) => state.soundOn);
+  const markEgg = useStoryStore((state) => state.markEgg);
   const [clicks, setClicks] = useState(0);
   const found = clicks >= SECRET_CLICKS;
+
+  // شمارنده محلی است و با عوض شدن برگه صفر می‌شود، ولی **پیدا شدن** ماندگار
+  // ثبت می‌شود تا موزه بتواند نشانش دهد (فاز ۹).
+  useEffect(() => {
+    if (found) markEgg('nazoo-secret');
+  }, [found, markEgg]);
 
   return (
     <aside className="rounded-md border border-dashed border-mohr/45 bg-mohr/[0.05] px-4 py-3">

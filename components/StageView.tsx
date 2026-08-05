@@ -41,6 +41,7 @@ export function StageView({ stage }: { stage: Stage }) {
   const choices = useStoryStore((state) => state.choices);
   const unlockedNodes = useStoryStore((state) => state.unlockedNodes);
   const soundOn = useStoryStore((state) => state.soundOn);
+  const markEgg = useStoryStore((state) => state.markEgg);
 
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<string[] | undefined>(undefined);
@@ -87,6 +88,12 @@ export function StageView({ stage }: { stage: Stage }) {
     recordChoice(stage.id, step, picked);
     setSelected(picked);
     playSound('stamp', soundOn);
+
+    // مُهر «وکیل خبر شد» سومین تخم‌مرغ عید پاک است (فاز ۶) و موزه باید بداند
+    // پیدا شده. اینجا ثبت می‌شود چون تنها جایی است که می‌دانیم کدام گزینه
+    // انتخاب شد، نه فقط اینکه مُهری نمایش داده شد.
+    const marks = reactionsFor(interaction, picked);
+    if (marks.some((option) => option.stamp === 'وکیل خبر شد')) markEgg('lawyer-stamp');
   }
 
   function handleAdvance() {
@@ -305,6 +312,14 @@ export function StageView({ stage }: { stage: Stage }) {
           شروع دوباره
         </Button>
         <SoundToggle />
+        <Link
+          href="/museum"
+          // «موزه» کوتاه است و بدون padding افقی پیوند فقط ۲۴px پهنا می‌گیرد —
+          // زیر حد هدف لمسی. `px-2` پهنایش را به بالای حد می‌برد.
+          className="inline-flex min-h-11 items-center px-2 font-ui text-sm text-jooheh-text underline decoration-jooheh underline-offset-4 hover:text-mahtab"
+        >
+          موزه
+        </Link>
         <Link
           href="/about-this"
           // ارتفاع کمینه ۲۴px برای هدف لمسی (WCAG 2.2 معیار ۲٫۵٫۸).

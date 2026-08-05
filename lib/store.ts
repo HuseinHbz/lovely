@@ -34,6 +34,17 @@ type StoryState = {
   meters: Record<string, number>;
   /** افکت صوتی — پیش‌فرض خاموش (بخش فاز ۶). */
   soundOn: boolean;
+  /**
+   * هر گزینه‌ای که **تا به حال** انتخاب شده، به‌ازای هر برگه — فاز ۹.
+   *
+   * جدا از `choices` است و باید هم باشد: `choices` فقط **آخرین** انتخاب هر
+   * تعامل را نگه می‌دارد و بازدید دوباره رویش می‌نویسد. برای اینکه «پخش
+   * دوباره» بتواند بگوید کدام واکنش‌ها هنوز دیده نشده‌اند، به یک مجموعه‌ی
+   * انباشتی نیاز است که هیچ‌وقت پاک نمی‌شود.
+   */
+  seenOptions: Record<string, string[]>;
+  /** تخم‌مرغ‌های عید پاک پیداشده — فاز ۹، برای موزه. */
+  foundEggs: string[];
 };
 
 type StoryActions = {
@@ -46,6 +57,8 @@ type StoryActions = {
   /** نشان و شاخص‌های یک برگه را اعمال می‌کند. هیچ‌کدام مسیر را عوض نمی‌کنند. */
   applyStage: (stageId: string) => void;
   toggleSound: () => void;
+  /** یک تخم‌مرغ عید پاک را پیداشده علامت می‌زند. idempotent. */
+  markEgg: (eggId: string) => void;
   reset: () => void;
 };
 
@@ -57,6 +70,8 @@ const initialState: StoryState = {
   applied: [],
   meters: {},
   soundOn: false,
+  seenOptions: {},
+  foundEggs: [],
 };
 
 export const useStoryStore = create<StoryState & StoryActions>()(
@@ -72,7 +87,18 @@ export const useStoryStore = create<StoryState & StoryActions>()(
           // انتخاب چندتایی با «،» در یک خانه ذخیره می‌شود تا شکل state ساده بماند.
           forStage[interactionIndex] = [...selected].join('،');
           const choices = { ...state.choices, [stageId]: forStage };
-          return { choices, unlockedNodes: [...unlockedNodesFor(choices)] };
+
+          // انباشت جداگانه: این یکی هیچ‌وقت بازنویسی نمی‌شود، چون «پخش دوباره»
+          // باید بداند کدام واکنش‌ها **تا به حال** دیده شده‌اند، نه اینکه
+          // آخرین بار چه انتخاب شد.
+          const seenForStage = new Set(state.seenOptions[stageId] ?? []);
+          for (const id of selected) seenForStage.add(id);
+
+          return {
+            choices,
+            unlockedNodes: [...unlockedNodesFor(choices)],
+            seenOptions: { ...state.seenOptions, [stageId]: [...seenForStage] },
+          };
         }),
 
       choiceFor: (stageId, interactionIndex) => {
@@ -108,6 +134,11 @@ export const useStoryStore = create<StoryState & StoryActions>()(
 
       toggleSound: () => set((state) => ({ soundOn: !state.soundOn })),
 
+      markEgg: (eggId) =>
+        set((state) =>
+          state.foundEggs.includes(eggId) ? state : { foundEggs: [...state.foundEggs, eggId] },
+        ),
+
       reset: () => set({ ...initialState }),
     }),
     {
@@ -122,6 +153,8 @@ export const useStoryStore = create<StoryState & StoryActions>()(
         applied: state.applied,
         meters: state.meters,
         soundOn: state.soundOn,
+        seenOptions: state.seenOptions,
+        foundEggs: state.foundEggs,
       }),
     },
   ),

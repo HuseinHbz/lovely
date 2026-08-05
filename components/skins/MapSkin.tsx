@@ -32,6 +32,7 @@ export function MapSkin({
   const [foundClip, setFoundClip] = useState(false);
   const reduceMotion = useReducedMotion() ?? false;
   const soundOn = useStoryStore((state) => state.soundOn);
+  const markEgg = useStoryStore((state) => state.markEgg);
 
   return (
     <section className="flex w-full flex-col items-center gap-4">
@@ -69,6 +70,7 @@ export function MapSkin({
             selectableIds={selectableIds}
             onSecretFound={() => {
               setFoundClip(true);
+              markEgg('hairclip');
               playSound('pin', soundOn);
             }}
             className="h-full w-full"
