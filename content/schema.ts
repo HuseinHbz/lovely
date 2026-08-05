@@ -1,4 +1,11 @@
 import { z } from 'zod';
+import {
+  SETTINGS,
+  WOLF_OUTFITS,
+  HEDGEHOG_OUTFITS,
+  checkWardrobe,
+  describeViolation,
+} from '@/lib/wardrobe';
 
 /**
  * قرارداد محتوا — هسته‌ی پروژه.
@@ -142,6 +149,18 @@ export const stageSchema = z
     skin: skinIdSchema,
     /** نقطه‌ای از نقشه که با تمام‌شدن این مرحله روشن می‌شود. */
     mapNode: slug.optional(),
+    /**
+     * محیط صحنه. لباس مجاز شخصیت‌ها را تعیین می‌کند؛ قاعده‌ی راهنمای شخصیت
+     * پایین در `superRefine` سنجیده می‌شود، پس نقض آن build را می‌شکند.
+     */
+    setting: z.enum(SETTINGS).optional(),
+    /** لباس شخصیت‌ها در این مرحله. اگر ندهی، پیش‌فرض کامپوننت اعمال می‌شود. */
+    wardrobe: z
+      .object({
+        wolf: z.enum(WOLF_OUTFITS).optional(),
+        hedgehog: z.enum(HEDGEHOG_OUTFITS).optional(),
+      })
+      .optional(),
     lines: z.array(z.object({ speaker: speakerSchema, text })).min(1),
     /**
      * افزوده نسبت به سند: آرایه به‌جای یک تعامل.
@@ -207,6 +226,22 @@ export const stageSchema = z
           code: 'custom',
           path: [...at, 'threshold'],
           message: 'threshold از تعداد جمله‌ها بیشتر است',
+        });
+      }
+    }
+
+    // قاعده‌ی راهنمای شخصیت: گرگ در محیط کاری همیشه کت و شلوار، و جوجه‌تیغی
+    // داخل بیمارستان همیشه روپوش پرستاری.
+    if (stage.setting !== undefined && stage.wardrobe !== undefined) {
+      const violation = checkWardrobe(stage.setting, {
+        wolf: stage.wardrobe.wolf,
+        hedgehog: stage.wardrobe.hedgehog,
+      });
+      if (violation !== undefined) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['wardrobe', violation.who],
+          message: describeViolation(violation),
         });
       }
     }

@@ -14,7 +14,16 @@ import { Wolf } from '@/components/art/Wolf';
 import { Hedgehog } from '@/components/art/Hedgehog';
 import { Panda } from '@/components/art/Panda';
 import { Owl } from '@/components/art/Owl';
+import { WolfCar } from '@/components/art/WolfCar';
 import { FACE_STATES, FACE_LABELS, type FaceState } from '@/components/art/faces';
+import {
+  WOLF_OUTFITS,
+  WOLF_OUTFIT_LABELS,
+  HEDGEHOG_OUTFITS,
+  HEDGEHOG_OUTFIT_LABELS,
+  type WolfOutfit,
+  type HedgehogOutfit,
+} from '@/lib/wardrobe';
 
 /** پیش‌نمایش پنج اسکین و آرت‌ورک. فقط در development. */
 
@@ -42,6 +51,8 @@ export default function DevSkinsPage() {
   if (process.env.NODE_ENV === 'production') notFound();
 
   const [face, setFace] = useState<FaceState>('neutral');
+  const [wolfOutfit, setWolfOutfit] = useState<WolfOutfit>('formal');
+  const [hedgehogOutfit, setHedgehogOutfit] = useState<HedgehogOutfit>('nurse');
 
   return (
     <main className="mx-auto flex max-w-5xl flex-col gap-12 px-safe py-12">
@@ -63,26 +74,57 @@ export default function DevSkinsPage() {
             </Button>
           ))}
         </div>
+        <div className="flex flex-wrap gap-2">
+          {WOLF_OUTFITS.map((item) => (
+            <Button
+              key={item}
+              variant={wolfOutfit === item ? 'solid' : 'outline'}
+              onClick={() => setWolfOutfit(item)}
+            >
+              گرگ: {WOLF_OUTFIT_LABELS[item]}
+            </Button>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {HEDGEHOG_OUTFITS.map((item) => (
+            <Button
+              key={item}
+              variant={hedgehogOutfit === item ? 'solid' : 'outline'}
+              onClick={() => setHedgehogOutfit(item)}
+            >
+              جوجه‌تیغی: {HEDGEHOG_OUTFIT_LABELS[item]}
+            </Button>
+          ))}
+        </div>
+
         <div className="flex flex-wrap items-end gap-8">
           <figure className="flex flex-col items-center gap-2">
-            <Wolf face={face} className="w-28" />
+            <Wolf face={face} outfit={wolfOutfit} className="w-36" />
             <figcaption className="font-ui text-xs text-jooheh-text">گرگ</figcaption>
           </figure>
           <figure className="flex flex-col items-center gap-2">
-            <Hedgehog face={face} className="w-28" />
+            <Hedgehog face={face} outfit={hedgehogOutfit} className="w-36" />
             <figcaption className="font-ui text-xs text-jooheh-text">جوجه‌تیغی</figcaption>
           </figure>
           <figure className="flex flex-col items-center gap-2">
-            <Panda className="w-28" />
+            <Panda className="w-24" />
             <figcaption className="font-ui text-xs text-jooheh-text">پاندا (نازو)</figcaption>
           </figure>
           <figure className="flex flex-col items-center gap-2">
-            <Owl className="w-28" />
+            <Owl className="w-24" />
             <figcaption className="font-ui text-xs text-jooheh-text">جغد رئیس</figcaption>
           </figure>
         </div>
         <p className="text-sm text-jooheh-text">
           بدن یک‌بار رندر می‌شود و فقط گروه صورت عوض می‌شود — بدون بارگذاری دوباره.
+        </p>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="font-display text-lg font-bold text-tigh">ماشین گرگ</h2>
+        <WolfCar className="w-full max-w-md" />
+        <p className="text-sm text-jooheh-text">
+          شاسی‌بلند مشکی؛ از پشت شیشه لپ‌تاپ، قهوه، عینک و کابل شارژ پیداست.
         </p>
       </section>
 
@@ -94,7 +136,12 @@ export default function DevSkinsPage() {
 
       <Frame title="۲ — اتاق بازجویی" note="گرگ راست، جوجه‌تیغی چپ؛ در موبایل بالای کارت">
         <div className="bg-shab p-4">
-          <InterrogationSkin wolfFace={face} hedgehogFace={face}>
+          <InterrogationSkin
+            wolfFace={face}
+            hedgehogFace={face}
+            wolfOutfit={wolfOutfit}
+            hedgehogOutfit={hedgehogOutfit}
+          >
             <Card label="پرونده‌ی محرمانه شماره ۲۷" title="معرفی گرگ">
               <div className="flex flex-col gap-3">
                 <SpeakerBubble name="پاندا" side="center">

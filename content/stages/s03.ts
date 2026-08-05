@@ -13,6 +13,10 @@ export const s03 = defineStage({
   title: 'اولین برخورد در بیمارستان',
   skin: 'interrogation',
   mapNode: 'bimarestan',
+  // صحنه در بیمارستان جغدهاست، پس روپوش پرستاری اجباری است و کت و شلوار گرگ
+  // هم با محیط کاری می‌خواند. اگر یکی از این دو عوض شود، zod build را می‌شکند.
+  setting: 'hospital',
+  wardrobe: { wolf: 'formal', hedgehog: 'nurse' },
   lines: [
     {
       speaker: 'system',

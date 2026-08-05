@@ -97,7 +97,12 @@ export function StageView({ stage }: { stage: Stage }) {
           exit={exit}
           className="flex w-full justify-center"
         >
-          <SkinFrame skin={stage.skin} unlocked={unlockedNodes}>
+          <SkinFrame
+            skin={stage.skin}
+            unlocked={unlockedNodes}
+            wolfOutfit={stage.wardrobe?.wolf ?? 'formal'}
+            hedgehogOutfit={stage.wardrobe?.hedgehog ?? 'nurse'}
+          >
             <Card label="پرونده‌ی محرمانه شماره ۲۷" title={stage.title}>
               <div className="flex flex-col gap-4">
                 {stage.lines.map((line, index) => (

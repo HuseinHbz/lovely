@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react';
 import type { SkinId } from '@/content/schema';
 import type { FaceState } from '@/components/art/faces';
+import type { HedgehogOutfit, WolfOutfit } from '@/lib/wardrobe';
 import { InterrogationSkin } from './InterrogationSkin';
 import { MapSkin } from './MapSkin';
 import { MindSkin } from './MindSkin';
@@ -21,12 +22,16 @@ export function SkinFrame({
   unlocked = [],
   wolfFace = 'neutral',
   hedgehogFace = 'neutral',
+  wolfOutfit = 'formal',
+  hedgehogOutfit = 'nurse',
 }: {
   skin: SkinId;
   children: ReactNode;
   unlocked?: readonly string[];
   wolfFace?: FaceState;
   hedgehogFace?: FaceState;
+  wolfOutfit?: WolfOutfit;
+  hedgehogOutfit?: HedgehogOutfit;
 }) {
   switch (skin) {
     case 'cover':
@@ -39,7 +44,12 @@ export function SkinFrame({
       return <EndingSkin>{children}</EndingSkin>;
     case 'interrogation':
       return (
-        <InterrogationSkin wolfFace={wolfFace} hedgehogFace={hedgehogFace}>
+        <InterrogationSkin
+          wolfFace={wolfFace}
+          hedgehogFace={hedgehogFace}
+          wolfOutfit={wolfOutfit}
+          hedgehogOutfit={hedgehogOutfit}
+        >
           {children}
         </InterrogationSkin>
       );
