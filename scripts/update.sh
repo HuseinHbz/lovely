@@ -32,10 +32,14 @@ KEEP=5
 
 usage() {
   cat <<'USAGE'
-Usage: sudo ./update.sh [--ref main] [--dir /var/www/wolf-hedgehog] [--rollback]
+Usage: sudo ./update.sh [--ref main] [--dir /var/www/wolf-hedgehog] [--keep 5] [--rollback]
 
   --ref <ref>     شاخه یا تگ برای به‌روزرسانی        (پیش‌فرض main)
   --dir <path>    محل نصب              (پیش‌فرض /var/www/wolf-hedgehog)
+  --keep <n>      چند ریلیز نگه داشته شود                 (پیش‌فرض 5)
+                  هر ریلیز حدود ۱۸۰MB روی دیسک اضافه می‌کند
+                  (node_modules بین ریلیزها هاردلینک است، .next نه).
+                  روی سرور با دیسک تنگ: --keep 2
   --rollback      بازگشت به ریلیز قبلی؛ با آرگومان دیگری ترکیب نمی‌شود
   -h, --help      همین راهنما
 USAGE
@@ -45,11 +49,14 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --ref)      REF="${2:-}"; shift 2 ;;
     --dir)      DIR="${2:-}"; shift 2 ;;
+    --keep)     KEEP="${2:-}"; shift 2 ;;
     --rollback) ROLLBACK=1; shift ;;
     -h|--help)  usage; exit 0 ;;
     *) usage; die "آرگومان ناشناخته: $1" 2 ;;
   esac
 done
+
+[[ "$KEEP" =~ ^[0-9]+$ && "$KEEP" -ge 1 ]] || die "‏--keep باید عددی ۱ یا بیشتر باشد." 2
 
 [[ "${EUID}" -eq 0 ]] || die "با sudo اجرا کن." 3
 [[ -d "$DIR" ]] || die "‏$DIR وجود ندارد. اول install.sh را اجرا کن." 3
