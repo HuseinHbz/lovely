@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# نصب یک‌دستوری روی یک سرور Ubuntu تازه.
+# نصب یک‌دستوری روی یک سرور Ubuntu یا Debian تازه.
 #
 #   sudo ./install.sh --domain <domain> --email <email> [--dir /var/www/wolf-hedgehog]
 #                     [--port 3000] [--expires 2027-01-01T00:00:00Z] [--no-ssl]
@@ -90,7 +90,7 @@ step "بررسی محیط"
 if [[ -r /etc/os-release ]]; then
   # shellcheck disable=SC1091
   . /etc/os-release
-  [[ "${ID:-}" == "ubuntu" ]] || warn "این اسکریپت برای Ubuntu نوشته شده (اینجا: ${PRETTY_NAME:-نامعلوم})."
+  case "${ID:-}" in ubuntu|debian) ;; *) warn "این اسکریپت برای Ubuntu و Debian نوشته شده (اینجا: ${PRETTY_NAME:-نامعلوم})." ;; esac
   ok "سیستم: ${PRETTY_NAME:-نامعلوم}"
 else
   warn "‏/etc/os-release خوانده نشد؛ تشخیص توزیع رد شد."
@@ -172,9 +172,27 @@ info "نصب وابستگی‌ها…"
 ( cd "$RELEASE_DIR" && pnpm install --frozen-lockfile --prod=false >/dev/null )
 ok "وابستگی‌ها نصب شدند"
 
+# ---------------------------------------------------------------------------
+# build با خروجی **قابل دیدن**.
+#
+# نسخه‌ی اول این را به `/dev/null` می‌فرستاد. نتیجه‌اش این بود که یک build
+# کُند از یک build هنگ‌کرده قابل تشخیص نبود و کاربر فکر می‌کرد اسکریپت مرده.
+# اندازه‌گیری شد که build در اوج حدود ۱٫۱ گیگابایت رم می‌خواهد و روی ۴۲ صفحه
+# چند پروسه‌ی worker موازی می‌سازد، پس روی VPS کوچک واقعاً کُند است.
+# ---------------------------------------------------------------------------
+total_ram_mb=$(awk '/MemTotal/{print int($2/1024)}' /proc/meminfo 2>/dev/null || echo 0)
+swap_mb=$(awk '/SwapTotal/{print int($2/1024)}' /proc/meminfo 2>/dev/null || echo 0)
+if [[ "$total_ram_mb" -gt 0 && "$total_ram_mb" -lt 2048 && "$swap_mb" -lt 512 ]]; then
+  warn "رم ${total_ram_mb}MB و swap ${swap_mb}MB — build حدود ۱٫۱GB می‌خواهد."
+  info "اگر اینجا گیر کرد، swap بساز:  fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile"
+fi
+
 info "‏build (نگهبان پیش‌نویس و بازبینی حریم خصوصی هم اینجا اجرا می‌شوند)…"
-( cd "$RELEASE_DIR" && NODE_ENV=production pnpm build >/dev/null ) \
-  || die "‏build شکست خورد. با «cd $RELEASE_DIR && pnpm build» خطای کامل را ببین." 4
+info "کُندترین بخش «Generating static pages» است؛ روی VPS چند دقیقه طول می‌کشد."
+( cd "$RELEASE_DIR" && NODE_ENV=production pnpm build 2>&1 | tee "$SHARED_DIR/logs/build.log" )
+if [[ "${PIPESTATUS[0]}" -ne 0 ]] || ! grep -q "Route (app)" "$SHARED_DIR/logs/build.log"; then
+  die "‏build شکست خورد. کل خروجی در $SHARED_DIR/logs/build.log است." 4
+fi
 ok "‏build موفق"
 
 trap - ERR
